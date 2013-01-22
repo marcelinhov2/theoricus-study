@@ -13091,12 +13091,12 @@ var app = {'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':
 
     Main.fields({
       name: String,
-      data: Array
+      socials: Array
     });
 
-    function Main(name, data) {
+    function Main(name, socials) {
       this.name = name;
-      this.data = data;
+      this.socials = socials;
     }
 
     return Main;
@@ -13138,35 +13138,34 @@ var app = {'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':
 
     Main = app.models.Main;
 
-    Mains.prototype.index = function() {
-      var data, view;
-      data = {
-        name: 'Marcelo Andrade Front-End Developer',
-        socials: [
-          {
-            name: 'Linkedin',
-            klass: 'linkedin',
-            url: 'http://www.linkedin.com/in/meandrade'
-          }, {
-            name: 'Twitter',
-            klass: 'twitter',
-            url: 'http://twitter.com/marcelinhov2'
-          }, {
-            name: 'Facebook',
-            klass: 'facebook',
-            url: 'http://www.facebook.com/marcelinhov2'
-          }, {
-            name: 'Email',
-            klass: 'email',
-            url: 'mailto:marceloandrade150@gmail.com?subject=Contato via Portfólio'
-          }, {
-            name: 'PDF',
-            klass: 'pdf',
-            url: '#'
-          }
-        ]
-      };
-      return view = this.render("main/home", data);
+    Mains.prototype.home = function() {
+      var model, name, socials, view;
+      socials = [
+        {
+          name: 'Linkedin',
+          klass: 'linkedin',
+          url: 'http://www.linkedin.com/in/meandrade'
+        }, {
+          name: 'Twitter',
+          klass: 'twitter',
+          url: 'http://twitter.com/marcelinhov2'
+        }, {
+          name: 'Facebook',
+          klass: 'facebook',
+          url: 'http://www.facebook.com/marcelinhov2'
+        }, {
+          name: 'Email',
+          klass: 'email',
+          url: 'mailto:marceloandrade150@gmail.com?subject=Contato via Portfólio'
+        }, {
+          name: 'PDF',
+          klass: 'pdf',
+          url: '#'
+        }
+      ];
+      name = 'Marcelo Andrade Front-End Developer';
+      model = new Main(name, socials);
+      return view = this.render("main/home", model);
     };
 
     return Mains;

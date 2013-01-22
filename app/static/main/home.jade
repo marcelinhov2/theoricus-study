@@ -1,6 +1,6 @@
 .visual_identity
 	h1 #{name}
 	ul.social
-		each social in socials
+		for social in socials
 			li
 				a(href="#{social.url}", class="#{social.klass}") #{social.name}

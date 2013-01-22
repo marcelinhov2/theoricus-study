@@ -8,12 +8,12 @@
 
     Main.fields({
       name: String,
-      data: Array
+      socials: Array
     });
 
-    function Main(name, data) {
+    function Main(name, socials) {
       this.name = name;
-      this.data = data;
+      this.socials = socials;
     }
 
     return Main;

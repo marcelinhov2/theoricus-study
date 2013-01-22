@@ -3,7 +3,7 @@
 class app.models.Main extends app.AppModel
 	
 	@fields
-		name    : String
-		data    : Array
-
-	constructor:( @name, @data )->
+		name: String
+		socials: Array
+	
+	constructor:( @name, @socials )->
