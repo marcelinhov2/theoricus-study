@@ -13043,7 +13043,7 @@ if (!JSON) {
 var app = {'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'main':{}},'views':{'main':{}}};
 
 // TEMPLATES
-(function() {app.templates = { 'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><h1><!-- @name -->' + escape((interp = name) == null ? '' : interp) + '<!-- /@name --></h1><ul class="social">');;(function(){  if ('number' == typeof socials.length) {    for (var $index = 0, $l = socials.length; $index < $l; $index++) {      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + "") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in socials) {      $l++;      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + "") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container"></div>');}return buf.join("");} };}).call( this );
+(function() {app.templates = { 'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><h1><!-- @name -->' + escape((interp = name) == null ? '' : interp) + '<!-- /@name --></h1><ul class="social">');;(function(){  if ('number' == typeof socials.length) {    for (var $index = 0, $l = socials.length; $index < $l; $index++) {      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + " semiTransparent") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in socials) {      $l++;      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + " semiTransparent") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
 
 // CONFIG
 (function() {app.config = {animate_at_startup: false,enable_auto_transitions: false,vendors: ["jquery.js,easing.js,json2.js,lettering.js,lettering-animate.js"],autobind: false};}).call( this );
@@ -13056,7 +13056,8 @@ var app = {'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':
 
 (function() {
   var __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   app.AppModel = (function(_super) {
 
@@ -13177,8 +13178,28 @@ var app = {'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':
     __extends(Home, _super);
 
     function Home() {
+      this.fadeHover = __bind(this.fadeHover, this);
       return Home.__super__.constructor.apply(this, arguments);
     }
+
+    Home.prototype.events = {
+      'a mouseover': 'fadeHover',
+      'a mouseout': 'fadeHover'
+    };
+
+    Home.prototype.fadeHover = function() {
+      var $item;
+      $item = $(event.currentTarget);
+      if (event.type === 'mouseover') {
+        return $item.stop().animate({
+          opacity: 1
+        }, 500);
+      } else {
+        return $item.stop().animate({
+          opacity: .5
+        }, 250);
+      }
+    };
 
     return Home;
 

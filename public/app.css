@@ -47,6 +47,8 @@ body {
   display: block;
   background: url("../images/sprite.png") no-repeat;
   text-indent: -9999px;
+}
+.visual_identity .social > li > a.semiTransparent {
   opacity: 0.3;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   filter: alpha(opacity=30);
