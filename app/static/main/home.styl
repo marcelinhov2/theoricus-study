@@ -1,1 +1,33 @@
+@import "../global/_reset"
 @import "../global/_global"
+
+.visual_identity 
+	h1
+		background:url('../images/sprite.png') no-repeat
+		text-indent:-9999px
+		display: none
+	.social
+		margin: 0 auto
+		> li
+			display: none
+			float: left
+			&:last-child
+				margin-right:0px !important
+			
+			> a
+				display:block
+				background:url('../images/sprite.png') no-repeat
+				text-indent:-9999px
+				&.semiTransparent
+					opacity: .3
+
+.visual_identity{ width:684px; height:222px; position: absolute; top: 50%; left: 50%; margin: -111px 0 0 -342px; }
+.visual_identity h1{ width:684px; height:89px; background-position:top left; margin-bottom: 37px; }
+.visual_identity .social{ width: 628px; }
+.visual_identity .social > li{ margin-right:37px; }
+.visual_identity .social > li > a{ width:96px; height:95px; }
+.visual_identity .social > li > a.linkedin{ background-position:0px -214px; }
+.visual_identity .social > li > a.twitter{ background-position:-131px -214px; }
+.visual_identity .social > li > a.facebook{ background-position:-263px -214px; }
+.visual_identity .social > li > a.email{ background-position:-394px -214px; }
+.visual_identity .social > li > a.pdf{ background-position:-527px -214px; }

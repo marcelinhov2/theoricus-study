@@ -8,27 +8,12 @@
     __extends(Home, _super);
 
     function Home() {
-      this.fadeHover = __bind(this.fadeHover, this);
+      this.after_render = __bind(this.after_render, this);
       return Home.__super__.constructor.apply(this, arguments);
     }
 
-    Home.prototype.events = {
-      'a mouseover': 'fadeHover',
-      'a mouseout': 'fadeHover'
-    };
-
-    Home.prototype.fadeHover = function() {
-      var $item;
-      $item = $(event.currentTarget);
-      if (event.type === 'mouseover') {
-        return $item.stop().animate({
-          opacity: 1
-        }, 500);
-      } else {
-        return $item.stop().animate({
-          opacity: .5
-        }, 250);
-      }
+    Home.prototype.after_render = function() {
+      return this.VisualIdentity = new app.components.VisualIdentity;
     };
 
     return Home;

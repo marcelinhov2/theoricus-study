@@ -13040,10 +13040,10 @@ if (!JSON) {
 	}
 
 })(jQuery)
-var app = {'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'main':{}},'views':{'main':{}}};
+var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'main':{}},'utils':{},'views':{'main':{}}};
 
 // TEMPLATES
-(function() {app.templates = { 'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><h1><!-- @name -->' + escape((interp = name) == null ? '' : interp) + '<!-- /@name --></h1><ul class="social">');;(function(){  if ('number' == typeof socials.length) {    for (var $index = 0, $l = socials.length; $index < $l; $index++) {      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + " semiTransparent") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in socials) {      $l++;      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + " semiTransparent") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
+(function() {app.templates = { 'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><h1><!-- @name -->' + escape((interp = name) == null ? '' : interp) + '<!-- /@name --></h1><ul class="social">');;(function(){  if ('number' == typeof socials.length) {    for (var $index = 0, $l = socials.length; $index < $l; $index++) {      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + " semiTransparent fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in socials) {      $l++;      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + " semiTransparent fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
 
 // CONFIG
 (function() {app.config = {animate_at_startup: false,enable_auto_transitions: false,vendors: ["jquery.js,easing.js,json2.js,lettering.js,lettering-animate.js"],autobind: false};}).call( this );
@@ -13054,11 +13054,13 @@ var app = {'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':
 // ROOT
 (function() {app.root = '/home';}).call( this );
 
+document.write('<scri'+'pt src="/toaster/app/utils/utils.js"></scr'+'ipt>')
+document.write('<scri'+'pt src="/toaster/app/app_view.js"></scr'+'ipt>')
+document.write('<scri'+'pt src="/toaster/app/components/visual_identity.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/app_model.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/app.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/models/main.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/app_controller.js"></scr'+'ipt>')
-document.write('<scri'+'pt src="/toaster/app/app_view.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/controllers/mains.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/views/main/home.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/views/main/index.js"></scr'+'ipt>')

@@ -13040,10 +13040,10 @@ if (!JSON) {
 	}
 
 })(jQuery)
-var app = {'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'main':{}},'views':{'main':{}}};
+var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'main':{}},'utils':{},'views':{'main':{}}};
 
 // TEMPLATES
-(function() {app.templates = { 'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><h1><!-- @name -->' + escape((interp = name) == null ? '' : interp) + '<!-- /@name --></h1><ul class="social">');;(function(){  if ('number' == typeof socials.length) {    for (var $index = 0, $l = socials.length; $index < $l; $index++) {      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + " semiTransparent") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in socials) {      $l++;      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + " semiTransparent") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
+(function() {app.templates = { 'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><h1><!-- @name -->' + escape((interp = name) == null ? '' : interp) + '<!-- /@name --></h1><ul class="social">');;(function(){  if ('number' == typeof socials.length) {    for (var $index = 0, $l = socials.length; $index < $l; $index++) {      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + " semiTransparent fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in socials) {      $l++;      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + " semiTransparent fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
 
 // CONFIG
 (function() {app.config = {animate_at_startup: false,enable_auto_transitions: false,vendors: ["jquery.js,easing.js,json2.js,lettering.js,lettering-animate.js"],autobind: false};}).call( this );
@@ -13055,9 +13055,130 @@ var app = {'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':
 (function() {app.root = '/home';}).call( this );
 
 (function() {
-  var __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  app.utils.Utils = (function() {
+
+    function Utils() {
+      this.queue = __bind(this.queue, this);
+
+      this.hideLoad = __bind(this.hideLoad, this);
+
+      this.showLoad = __bind(this.showLoad, this);
+
+      this.fadeHover = __bind(this.fadeHover, this);
+
+    }
+
+    Utils.prototype.fadeHover = function(item, to, time) {
+      return item.stop().animate({
+        opacity: to
+      }, time);
+    };
+
+    Utils.prototype.showLoad = function() {
+      return $("body").append("<a id='loader'>Loading...</a>", function() {
+        return $("#loader").fadeIn("slow");
+      });
+    };
+
+    Utils.prototype.hideLoad = function() {
+      return $("#loader").fadeOut("slow", function() {
+        return $("body").remove("<a id='loader'>Loading...</a>");
+      });
+    };
+
+    Utils.prototype.queue = function(start) {
+      var promise, rest;
+      rest = [].splice.call(arguments_, 1);
+      promise = $.Deferred();
+      if (start) {
+        $.when(start()).then(function() {});
+        return queue.apply(window, rest);
+      } else {
+        promise.resolve();
+        return promise;
+      }
+    };
+
+    return Utils;
+
+  })();
+
+  app.AppView = (function(_super) {
+
+    __extends(AppView, _super);
+
+    function AppView() {
+      this.hoverEffects = __bind(this.hoverEffects, this);
+      this.Utils = new app.utils.Utils;
+    }
+
+    AppView.prototype.events = {
+      'a.fadeHover mouseover': 'hoverEffects',
+      'a.fadeHover mouseout': 'hoverEffects'
+    };
+
+    AppView.prototype.hoverEffects = function() {
+      var $item;
+      $item = $(event.currentTarget);
+      if (event.type === 'mouseover') {
+        return this.Utils.fadeHover($item, 1, 500);
+      } else {
+        return this.Utils.fadeHover($item, .3, 250);
+      }
+    };
+
+    return AppView;
+
+  })(theoricus.mvc.View);
+
+  app.components.VisualIdentity = (function(_super) {
+
+    __extends(VisualIdentity, _super);
+
+    VisualIdentity.prototype.el = '.visual_identity';
+
+    function VisualIdentity() {
+      this.animateVisualIdentity = __bind(this.animateVisualIdentity, this);
+
+      this.showSocial = __bind(this.showSocial, this);
+
+      this.showTitle = __bind(this.showTitle, this);
+      this.Utils = new app.utils.Utils;
+      this.title = $(this.el + ' h1');
+      this.socials = $(this.el + ' ul li');
+      this.animateVisualIdentity();
+    }
+
+    VisualIdentity.prototype.showTitle = function() {
+      return this.title.fadeIn('slow');
+    };
+
+    VisualIdentity.prototype.showSocial = function() {
+      var delay, i, item, link, _results;
+      i = 0;
+      _results = [];
+      while (i < this.socials.length) {
+        item = $(this.socials[i]);
+        link = item.find("a");
+        delay = 200 * i;
+        item.delay(delay).fadeIn("slow");
+        _results.push(i++);
+      }
+      return _results;
+    };
+
+    VisualIdentity.prototype.animateVisualIdentity = function() {
+      this.showTitle();
+      return this.showSocial();
+    };
+
+    return VisualIdentity;
+
+  })(app.AppView);
 
   app.AppModel = (function(_super) {
 
@@ -13116,18 +13237,6 @@ var app = {'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':
 
   })(theoricus.mvc.Controller);
 
-  app.AppView = (function(_super) {
-
-    __extends(AppView, _super);
-
-    function AppView() {
-      return AppView.__super__.constructor.apply(this, arguments);
-    }
-
-    return AppView;
-
-  })(theoricus.mvc.View);
-
   app.controllers.Mains = (function(_super) {
     var Main;
 
@@ -13178,27 +13287,12 @@ var app = {'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':
     __extends(Home, _super);
 
     function Home() {
-      this.fadeHover = __bind(this.fadeHover, this);
+      this.after_render = __bind(this.after_render, this);
       return Home.__super__.constructor.apply(this, arguments);
     }
 
-    Home.prototype.events = {
-      'a mouseover': 'fadeHover',
-      'a mouseout': 'fadeHover'
-    };
-
-    Home.prototype.fadeHover = function() {
-      var $item;
-      $item = $(event.currentTarget);
-      if (event.type === 'mouseover') {
-        return $item.stop().animate({
-          opacity: 1
-        }, 500);
-      } else {
-        return $item.stop().animate({
-          opacity: .5
-        }, 250);
-      }
+    Home.prototype.after_render = function() {
+      return this.VisualIdentity = new app.components.VisualIdentity;
     };
 
     return Home;
