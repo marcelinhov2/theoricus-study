@@ -13,13 +13,13 @@ class app.utils.Utils
 		$("#loader").fadeOut "slow", ->
 			$("body").remove "<a id='loader'>Loading...</a>"
 
-	queue : (start) =>
-		rest = [].splice.call(arguments_, 1)
-		promise = $.Deferred()
-		
-		if start
-			$.when(start()).then ->
-			queue.apply window, rest
-		else
-			promise.resolve()
-			promise
+	queue : (methods) =>
+		i = 0
+
+		while i < methods.length
+			method = methods[i]
+
+			do method
+
+			$(window).on 'finishAnimation', ->
+				i++

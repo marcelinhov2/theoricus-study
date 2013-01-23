@@ -32,17 +32,18 @@
       });
     };
 
-    Utils.prototype.queue = function(start) {
-      var promise, rest;
-      rest = [].splice.call(arguments_, 1);
-      promise = $.Deferred();
-      if (start) {
-        $.when(start()).then(function() {});
-        return queue.apply(window, rest);
-      } else {
-        promise.resolve();
-        return promise;
+    Utils.prototype.queue = function(methods) {
+      var i, method, _results;
+      i = 0;
+      _results = [];
+      while (i < methods.length) {
+        method = methods[i];
+        method();
+        _results.push($(window).on('finishAnimation', function() {
+          return i++;
+        }));
       }
+      return _results;
     };
 
     return Utils;

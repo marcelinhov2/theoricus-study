@@ -22,26 +22,26 @@
     }
 
     VisualIdentity.prototype.showTitle = function() {
-      return this.title.fadeIn('slow');
+      return this.title.fadeIn('slow', function() {
+        return $(window).trigger('finishAnimation');
+      });
     };
 
     VisualIdentity.prototype.showSocial = function() {
-      var delay, i, item, link, _results;
+      var delay, i, item, link;
       i = 0;
-      _results = [];
       while (i < this.socials.length) {
         item = $(this.socials[i]);
         link = item.find("a");
         delay = 200 * i;
         item.delay(delay).fadeIn("slow");
-        _results.push(i++);
+        i++;
       }
-      return _results;
+      return $(window).trigger('finishAnimation');
     };
 
     VisualIdentity.prototype.animateVisualIdentity = function() {
-      this.showTitle();
-      return this.showSocial();
+      return this.Utils.queue([this.showTitle, this.showSocial]);
     };
 
     return VisualIdentity;

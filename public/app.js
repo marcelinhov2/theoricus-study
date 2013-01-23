@@ -13090,17 +13090,18 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
       });
     };
 
-    Utils.prototype.queue = function(start) {
-      var promise, rest;
-      rest = [].splice.call(arguments_, 1);
-      promise = $.Deferred();
-      if (start) {
-        $.when(start()).then(function() {});
-        return queue.apply(window, rest);
-      } else {
-        promise.resolve();
-        return promise;
+    Utils.prototype.queue = function(methods) {
+      var i, method, _results;
+      i = 0;
+      _results = [];
+      while (i < methods.length) {
+        method = methods[i];
+        method();
+        _results.push($(window).on('finishAnimation', function() {
+          return i++;
+        }));
       }
+      return _results;
     };
 
     return Utils;
@@ -13154,26 +13155,26 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     }
 
     VisualIdentity.prototype.showTitle = function() {
-      return this.title.fadeIn('slow');
+      return this.title.fadeIn('slow', function() {
+        return $(window).trigger('finishAnimation');
+      });
     };
 
     VisualIdentity.prototype.showSocial = function() {
-      var delay, i, item, link, _results;
+      var delay, i, item, link;
       i = 0;
-      _results = [];
       while (i < this.socials.length) {
         item = $(this.socials[i]);
         link = item.find("a");
         delay = 200 * i;
         item.delay(delay).fadeIn("slow");
-        _results.push(i++);
+        i++;
       }
-      return _results;
+      return $(window).trigger('finishAnimation');
     };
 
     VisualIdentity.prototype.animateVisualIdentity = function() {
-      this.showTitle();
-      return this.showSocial();
+      return this.Utils.queue([this.showTitle, this.showSocial]);
     };
 
     return VisualIdentity;

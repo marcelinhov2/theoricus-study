@@ -12,7 +12,8 @@ class app.components.VisualIdentity extends app.AppView
 		do @animateVisualIdentity
 
 	showTitle : =>
-		@title.fadeIn 'slow'
+		@title.fadeIn 'slow', ->
+			$(window).trigger('finishAnimation');
 
 	showSocial : =>
 		i = 0
@@ -26,6 +27,7 @@ class app.components.VisualIdentity extends app.AppView
 			
 			i++
 
+		$(window).trigger('finishAnimation');
+
 	animateVisualIdentity : =>
-		do @showTitle
-		do @showSocial
+		@Utils.queue [@showTitle, @showSocial]
