@@ -10,38 +10,78 @@
     VisualIdentity.prototype.el = '.visual_identity';
 
     function VisualIdentity() {
-      this.animateVisualIdentity = __bind(this.animateVisualIdentity, this);
+      this.hideVisualIdentity = __bind(this.hideVisualIdentity, this);
+
+      this.showVisualIdentity = __bind(this.showVisualIdentity, this);
+
+      this.hideSocial = __bind(this.hideSocial, this);
+
+      this.hideTitle = __bind(this.hideTitle, this);
 
       this.showSocial = __bind(this.showSocial, this);
 
       this.showTitle = __bind(this.showTitle, this);
-      this.Utils = new app.utils.Utils;
       this.title = $(this.el + ' h1');
       this.socials = $(this.el + ' ul li');
-      this.animateVisualIdentity();
     }
 
-    VisualIdentity.prototype.showTitle = function() {
-      return this.title.fadeIn('slow');
+    VisualIdentity.prototype.showTitle = function(callback) {
+      return this.title.fadeIn('slow', function() {
+        if (callback) {
+          return callback();
+        }
+      });
     };
 
-    VisualIdentity.prototype.showSocial = function() {
-      var delay, i, item, link, _results;
-      i = 0;
-      _results = [];
-      while (i < this.socials.length) {
-        item = $(this.socials[i]);
+    VisualIdentity.prototype.showSocial = function(callback) {
+      var _this = this;
+      return this.socials.each(function(i, item) {
+        var delay, link;
+        item = $(item);
         link = item.find("a");
         delay = 200 * i;
-        item.delay(delay).fadeIn("slow");
-        _results.push(i++);
-      }
-      return _results;
+        return item.delay(delay).fadeIn("slow");
+      }).promise().done(function() {
+        if (callback) {
+          return callback();
+        }
+      });
     };
 
-    VisualIdentity.prototype.animateVisualIdentity = function() {
-      this.showTitle();
-      return this.showSocial();
+    VisualIdentity.prototype.hideTitle = function(callback) {
+      return this.title.fadeOut('slow', function() {
+        if (callback) {
+          return callback();
+        }
+      });
+    };
+
+    VisualIdentity.prototype.hideSocial = function(callback) {
+      var _this = this;
+      return this.socials.each(function(i, item) {
+        var delay, link, reverse_index;
+        reverse_index = (_this.socials.length - 1) - i;
+        item = $(_this.socials[reverse_index]);
+        link = item.find("a");
+        delay = 200 * i;
+        return item.delay(delay).fadeOut("slow");
+      }).promise().done(function() {
+        if (callback) {
+          return callback();
+        }
+      });
+    };
+
+    VisualIdentity.prototype.showVisualIdentity = function() {
+      var show;
+      show = new app.utils.Queue([this.showTitle, this.showSocial]);
+      return show.queue();
+    };
+
+    VisualIdentity.prototype.hideVisualIdentity = function() {
+      var hide;
+      hide = new app.utils.Queue([this.hideSocial, this.hideTitle]);
+      return hide.queue();
     };
 
     return VisualIdentity;

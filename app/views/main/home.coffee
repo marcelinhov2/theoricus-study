@@ -4,4 +4,5 @@
 class app.views.main.Home extends app.AppView
 	
 	after_render : =>
-		@VisualIdentity = new app.components.VisualIdentity
+		visual_identity = new app.components.VisualIdentity
+		do visual_identity.showVisualIdentity

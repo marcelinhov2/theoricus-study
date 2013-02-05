@@ -13055,9 +13055,48 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 (function() {app.root = '/home';}).call( this );
 
 (function() {
-  var __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  app.utils.Queue = (function() {
+
+    Queue.prototype.index = null;
+
+    Queue.prototype.methods = null;
+
+    function Queue(methods) {
+      this.when_done = __bind(this.when_done, this);
+
+      this.execute = __bind(this.execute, this);
+
+      this.queue = __bind(this.queue, this);
+      this.index = 0;
+      this.methods = methods;
+    }
+
+    Queue.prototype.queue = function(after_all) {
+      this.after_all = after_all;
+      return this.execute();
+    };
+
+    Queue.prototype.execute = function() {
+      if (this.index === this.methods.length && (this.after_all != null)) {
+        return this.after_all();
+      }
+      if (this.methods[this.index]) {
+        return this.methods[this.index](this.when_done);
+      }
+    };
+
+    Queue.prototype.when_done = function() {
+      this.index++;
+      return this.execute();
+    };
+
+    return Queue;
+
+  })();
 
   app.AppModel = (function(_super) {
 
@@ -13073,52 +13112,29 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 
   app.utils.Utils = (function() {
 
-    function Utils() {
-      this.queue = __bind(this.queue, this);
+    function Utils() {}
 
-      this.hideLoad = __bind(this.hideLoad, this);
-
-      this.showLoad = __bind(this.showLoad, this);
-
-      this.fadeHover = __bind(this.fadeHover, this);
-
-    }
-
-    Utils.prototype.fadeHover = function(item, to, time) {
+    Utils.fadeHover = function(item, to, time) {
       return item.stop().animate({
         opacity: to
       }, time);
     };
 
-    Utils.prototype.showLoad = function() {
+    Utils.showLoad = function() {
       return $("body").append("<a id='loader'>Loading...</a>", function() {
         return $("#loader").fadeIn("slow");
       });
     };
 
-    Utils.prototype.hideLoad = function() {
+    Utils.hideLoad = function() {
       return $("#loader").fadeOut("slow", function() {
         return $("body").remove("<a id='loader'>Loading...</a>");
       });
     };
 
-    Utils.prototype.queue = function(methods) {
-      var i, method, _results;
-      i = 0;
-      _results = [];
-      while (i < methods.length) {
-        method = methods[i];
-        method();
-        _results.push($(window).on('finishAnimation', function() {
-          return i++;
-        }));
-      }
-      return _results;
-    };
-
     return Utils;
 
-  })();
+  }).call(this);
 
   app.models.Main = (function(_super) {
 
@@ -13171,7 +13187,7 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 
     function AppView() {
       this.hoverEffects = __bind(this.hoverEffects, this);
-      this.Utils = new app.utils.Utils;
+      return AppView.__super__.constructor.apply(this, arguments);
     }
 
     AppView.prototype.events = {
@@ -13183,9 +13199,9 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
       var $item;
       $item = $(event.currentTarget);
       if (event.type === 'mouseover') {
-        return this.Utils.fadeHover($item, 1, 500);
+        return app.utils.Utils.fadeHover($item, 1, 500);
       } else {
-        return this.Utils.fadeHover($item, .3, 250);
+        return app.utils.Utils.fadeHover($item, .3, 250);
       }
     };
 
@@ -13200,38 +13216,78 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     VisualIdentity.prototype.el = '.visual_identity';
 
     function VisualIdentity() {
-      this.animateVisualIdentity = __bind(this.animateVisualIdentity, this);
+      this.hideVisualIdentity = __bind(this.hideVisualIdentity, this);
+
+      this.showVisualIdentity = __bind(this.showVisualIdentity, this);
+
+      this.hideSocial = __bind(this.hideSocial, this);
+
+      this.hideTitle = __bind(this.hideTitle, this);
 
       this.showSocial = __bind(this.showSocial, this);
 
       this.showTitle = __bind(this.showTitle, this);
-      this.Utils = new app.utils.Utils;
       this.title = $(this.el + ' h1');
       this.socials = $(this.el + ' ul li');
-      this.animateVisualIdentity();
     }
 
-    VisualIdentity.prototype.showTitle = function() {
-      return this.title.fadeIn('slow');
+    VisualIdentity.prototype.showTitle = function(callback) {
+      return this.title.fadeIn('slow', function() {
+        if (callback) {
+          return callback();
+        }
+      });
     };
 
-    VisualIdentity.prototype.showSocial = function() {
-      var delay, i, item, link, _results;
-      i = 0;
-      _results = [];
-      while (i < this.socials.length) {
-        item = $(this.socials[i]);
+    VisualIdentity.prototype.showSocial = function(callback) {
+      var _this = this;
+      return this.socials.each(function(i, item) {
+        var delay, link;
+        item = $(item);
         link = item.find("a");
         delay = 200 * i;
-        item.delay(delay).fadeIn("slow");
-        _results.push(i++);
-      }
-      return _results;
+        return item.delay(delay).fadeIn("slow");
+      }).promise().done(function() {
+        if (callback) {
+          return callback();
+        }
+      });
     };
 
-    VisualIdentity.prototype.animateVisualIdentity = function() {
-      this.showTitle();
-      return this.showSocial();
+    VisualIdentity.prototype.hideTitle = function(callback) {
+      return this.title.fadeOut('slow', function() {
+        if (callback) {
+          return callback();
+        }
+      });
+    };
+
+    VisualIdentity.prototype.hideSocial = function(callback) {
+      var _this = this;
+      return this.socials.each(function(i, item) {
+        var delay, link, reverse_index;
+        reverse_index = (_this.socials.length - 1) - i;
+        item = $(_this.socials[reverse_index]);
+        link = item.find("a");
+        delay = 200 * i;
+        return item.delay(delay).fadeOut("slow");
+      }).promise().done(function() {
+        if (callback) {
+          return callback();
+        }
+      });
+    };
+
+    VisualIdentity.prototype.showVisualIdentity = function() {
+      var show;
+      show = new app.utils.Queue([this.showTitle, this.showSocial]);
+      return show.queue();
+    };
+
+    VisualIdentity.prototype.hideVisualIdentity = function() {
+      var hide;
+      hide = new app.utils.Queue([this.hideSocial, this.hideTitle]);
+      return hide.queue();
     };
 
     return VisualIdentity;
@@ -13293,7 +13349,9 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     }
 
     Home.prototype.after_render = function() {
-      return this.VisualIdentity = new app.components.VisualIdentity;
+      var visual_identity;
+      visual_identity = new app.components.VisualIdentity;
+      return visual_identity.showVisualIdentity();
     };
 
     return Home;

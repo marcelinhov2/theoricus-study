@@ -1,3 +1,5 @@
+#<< app/utils/queue
+
 class app.App extends theoricus.Theoricus
 
 	constructor: ->

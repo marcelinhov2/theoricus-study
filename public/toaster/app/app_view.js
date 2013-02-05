@@ -9,7 +9,7 @@
 
     function AppView() {
       this.hoverEffects = __bind(this.hoverEffects, this);
-      this.Utils = new app.utils.Utils;
+      return AppView.__super__.constructor.apply(this, arguments);
     }
 
     AppView.prototype.events = {
@@ -21,9 +21,9 @@
       var $item;
       $item = $(event.currentTarget);
       if (event.type === 'mouseover') {
-        return this.Utils.fadeHover($item, 1, 500);
+        return app.utils.Utils.fadeHover($item, 1, 500);
       } else {
-        return this.Utils.fadeHover($item, .3, 250);
+        return app.utils.Utils.fadeHover($item, .3, 250);
       }
     };
 

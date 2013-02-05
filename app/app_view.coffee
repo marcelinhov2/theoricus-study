@@ -2,9 +2,6 @@
 
 class app.AppView extends theoricus.mvc.View
 	
-	constructor : ->
-		@Utils = new app.utils.Utils
-
 	events:
 		'a.fadeHover mouseover' : 'hoverEffects'
 		'a.fadeHover mouseout'  : 'hoverEffects'
@@ -13,6 +10,6 @@ class app.AppView extends theoricus.mvc.View
 		$item = $( event.currentTarget )
 
 		if event.type is 'mouseover'
-			@Utils.fadeHover $item, 1, 500
+			app.utils.Utils.fadeHover $item, 1, 500
 		else
-			@Utils.fadeHover $item, .3, 250
+			app.utils.Utils.fadeHover $item, .3, 250
