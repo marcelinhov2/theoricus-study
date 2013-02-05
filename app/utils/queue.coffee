@@ -6,9 +6,8 @@ class app.utils.Queue
   # saves a list of methods to be executed sequentially
   methods : null
 
-  constructor : (methods) ->
+  constructor : (@methods) ->
     @index   = 0
-    @methods = methods
 
   # array of methods to be executed
   # all the methods must receive a callback as parameter

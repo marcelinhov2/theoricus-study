@@ -8,13 +8,14 @@
     Queue.prototype.methods = null;
 
     function Queue(methods) {
+      this.methods = methods;
       this.when_done = __bind(this.when_done, this);
 
       this.execute = __bind(this.execute, this);
 
       this.queue = __bind(this.queue, this);
+
       this.index = 0;
-      this.methods = methods;
     }
 
     Queue.prototype.queue = function(after_all) {
