@@ -13,12 +13,12 @@
 
       this.execute = __bind(this.execute, this);
 
-      this.queue = __bind(this.queue, this);
+      this.start = __bind(this.start, this);
 
       this.index = 0;
     }
 
-    Queue.prototype.queue = function(after_all) {
+    Queue.prototype.start = function(after_all) {
       this.after_all = after_all;
       return this.execute();
     };

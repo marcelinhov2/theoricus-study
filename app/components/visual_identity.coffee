@@ -42,9 +42,9 @@ class app.components.VisualIdentity extends app.AppView
         do callback
 
   showVisualIdentity : =>
-    show = new app.utils.Queue [@showTitle, @showSocial]
-    do show.queue
+    showQueue = new app.utils.Queue [@showTitle, @showSocial]
+    do showQueue.start
 
   hideVisualIdentity : =>
-    hide = new app.utils.Queue [@hideSocial, @hideTitle]
-    do hide.queue
+    hideQueue = new app.utils.Queue [@hideSocial, @hideTitle]
+    do hideQueue.start

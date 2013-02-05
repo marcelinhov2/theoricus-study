@@ -73,15 +73,15 @@
     };
 
     VisualIdentity.prototype.showVisualIdentity = function() {
-      var show;
-      show = new app.utils.Queue([this.showTitle, this.showSocial]);
-      return show.queue();
+      var showQueue;
+      showQueue = new app.utils.Queue([this.showTitle, this.showSocial]);
+      return showQueue.start();
     };
 
     VisualIdentity.prototype.hideVisualIdentity = function() {
-      var hide;
-      hide = new app.utils.Queue([this.hideSocial, this.hideTitle]);
-      return hide.queue();
+      var hideQueue;
+      hideQueue = new app.utils.Queue([this.hideSocial, this.hideTitle]);
+      return hideQueue.start();
     };
 
     return VisualIdentity;

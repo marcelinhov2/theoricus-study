@@ -13071,12 +13071,12 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 
       this.execute = __bind(this.execute, this);
 
-      this.queue = __bind(this.queue, this);
+      this.start = __bind(this.start, this);
 
       this.index = 0;
     }
 
-    Queue.prototype.queue = function(after_all) {
+    Queue.prototype.start = function(after_all) {
       this.after_all = after_all;
       return this.execute();
     };
@@ -13280,15 +13280,15 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     };
 
     VisualIdentity.prototype.showVisualIdentity = function() {
-      var show;
-      show = new app.utils.Queue([this.showTitle, this.showSocial]);
-      return show.queue();
+      var showQueue;
+      showQueue = new app.utils.Queue([this.showTitle, this.showSocial]);
+      return showQueue.start();
     };
 
     VisualIdentity.prototype.hideVisualIdentity = function() {
-      var hide;
-      hide = new app.utils.Queue([this.hideSocial, this.hideTitle]);
-      return hide.queue();
+      var hideQueue;
+      hideQueue = new app.utils.Queue([this.hideSocial, this.hideTitle]);
+      return hideQueue.start();
     };
 
     return VisualIdentity;

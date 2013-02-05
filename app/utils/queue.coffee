@@ -12,7 +12,7 @@ class app.utils.Queue
   # array of methods to be executed
   # all the methods must receive a callback as parameter
   # and just execute the callback when all the jazz is done
-  queue : ( @after_all ) =>
+  start : ( @after_all ) =>
     do @execute
 
   execute : =>
