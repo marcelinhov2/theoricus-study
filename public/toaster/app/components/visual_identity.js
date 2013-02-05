@@ -27,7 +27,7 @@
 
     VisualIdentity.prototype.showTitle = function(callback) {
       return this.title.fadeIn('slow', function() {
-        if (callback) {
+        if (callback != null) {
           return callback();
         }
       });
@@ -42,7 +42,7 @@
         delay = 200 * i;
         return item.delay(delay).fadeIn("slow");
       }).promise().done(function() {
-        if (callback) {
+        if (callback != null) {
           return callback();
         }
       });
@@ -50,7 +50,7 @@
 
     VisualIdentity.prototype.hideTitle = function(callback) {
       return this.title.fadeOut('slow', function() {
-        if (callback) {
+        if (callback != null) {
           return callback();
         }
       });
@@ -66,7 +66,7 @@
         delay = 200 * i;
         return item.delay(delay).fadeOut("slow");
       }).promise().done(function() {
-        if (callback) {
+        if (callback != null) {
           return callback();
         }
       });

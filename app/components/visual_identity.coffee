@@ -9,8 +9,7 @@ class app.components.VisualIdentity extends app.AppView
 
   showTitle : (callback) =>
     @title.fadeIn 'slow', ->
-      if callback
-        do callback
+      do callback if callback?
 
   showSocial : (callback) =>
     @socials.each((i, item) =>
@@ -20,13 +19,11 @@ class app.components.VisualIdentity extends app.AppView
       
       item.delay(delay).fadeIn "slow"
     ).promise().done =>
-      if callback
-        do callback
+      do callback if callback?
 
   hideTitle : (callback) =>
     @title.fadeOut 'slow', ->
-      if callback
-        do callback
+      do callback if callback?
 
   hideSocial : (callback) =>
     @socials.each( (i, item) =>
@@ -38,8 +35,7 @@ class app.components.VisualIdentity extends app.AppView
       
       item.delay(delay).fadeOut "slow"
     ).promise().done =>
-      if callback
-        do callback
+      do callback if callback?
 
   showVisualIdentity : =>
     showQueue = new app.utils.Queue [@showTitle, @showSocial]
