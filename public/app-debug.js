@@ -13054,13 +13054,13 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 // ROOT
 (function() {app.root = '/home';}).call( this );
 
+document.write('<scri'+'pt src="/toaster/app/app_model.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/utils/utils.js"></scr'+'ipt>')
+document.write('<scri'+'pt src="/toaster/app/models/main.js"></scr'+'ipt>')
+document.write('<scri'+'pt src="/toaster/app/app.js"></scr'+'ipt>')
+document.write('<scri'+'pt src="/toaster/app/app_controller.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/app_view.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/components/visual_identity.js"></scr'+'ipt>')
-document.write('<scri'+'pt src="/toaster/app/app_model.js"></scr'+'ipt>')
-document.write('<scri'+'pt src="/toaster/app/app.js"></scr'+'ipt>')
-document.write('<scri'+'pt src="/toaster/app/models/main.js"></scr'+'ipt>')
-document.write('<scri'+'pt src="/toaster/app/app_controller.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/controllers/mains.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/views/main/home.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/views/main/index.js"></scr'+'ipt>')

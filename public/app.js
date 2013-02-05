@@ -13055,9 +13055,21 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 (function() {app.root = '/home';}).call( this );
 
 (function() {
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  app.AppModel = (function(_super) {
+
+    __extends(AppModel, _super);
+
+    function AppModel() {
+      return AppModel.__super__.constructor.apply(this, arguments);
+    }
+
+    return AppModel;
+
+  })(theoricus.mvc.Model);
 
   app.utils.Utils = (function() {
 
@@ -13108,6 +13120,51 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 
   })();
 
+  app.models.Main = (function(_super) {
+
+    __extends(Main, _super);
+
+    Main.fields({
+      name: String,
+      socials: Array
+    });
+
+    function Main(name, socials) {
+      this.name = name;
+      this.socials = socials;
+    }
+
+    return Main;
+
+  })(app.AppModel);
+
+  app.App = (function(_super) {
+
+    __extends(App, _super);
+
+    function App() {
+      App.__super__.constructor.call(this);
+      this.start();
+    }
+
+    return App;
+
+  })(theoricus.Theoricus);
+
+  new app.App();
+
+  app.AppController = (function(_super) {
+
+    __extends(AppController, _super);
+
+    function AppController() {
+      return AppController.__super__.constructor.apply(this, arguments);
+    }
+
+    return AppController;
+
+  })(theoricus.mvc.Controller);
+
   app.AppView = (function(_super) {
 
     __extends(AppView, _super);
@@ -13155,88 +13212,31 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     }
 
     VisualIdentity.prototype.showTitle = function() {
-      return this.title.fadeIn('slow', function() {
-        return $(window).trigger('finishAnimation');
-      });
+      return this.title.fadeIn('slow');
     };
 
     VisualIdentity.prototype.showSocial = function() {
-      var delay, i, item, link;
+      var delay, i, item, link, _results;
       i = 0;
+      _results = [];
       while (i < this.socials.length) {
         item = $(this.socials[i]);
         link = item.find("a");
         delay = 200 * i;
         item.delay(delay).fadeIn("slow");
-        i++;
+        _results.push(i++);
       }
-      return $(window).trigger('finishAnimation');
+      return _results;
     };
 
     VisualIdentity.prototype.animateVisualIdentity = function() {
-      return this.Utils.queue([this.showTitle, this.showSocial]);
+      this.showTitle();
+      return this.showSocial();
     };
 
     return VisualIdentity;
 
   })(app.AppView);
-
-  app.AppModel = (function(_super) {
-
-    __extends(AppModel, _super);
-
-    function AppModel() {
-      return AppModel.__super__.constructor.apply(this, arguments);
-    }
-
-    return AppModel;
-
-  })(theoricus.mvc.Model);
-
-  app.App = (function(_super) {
-
-    __extends(App, _super);
-
-    function App() {
-      App.__super__.constructor.call(this);
-      this.start();
-    }
-
-    return App;
-
-  })(theoricus.Theoricus);
-
-  new app.App();
-
-  app.models.Main = (function(_super) {
-
-    __extends(Main, _super);
-
-    Main.fields({
-      name: String,
-      socials: Array
-    });
-
-    function Main(name, socials) {
-      this.name = name;
-      this.socials = socials;
-    }
-
-    return Main;
-
-  })(app.AppModel);
-
-  app.AppController = (function(_super) {
-
-    __extends(AppController, _super);
-
-    function AppController() {
-      return AppController.__super__.constructor.apply(this, arguments);
-    }
-
-    return AppController;
-
-  })(theoricus.mvc.Controller);
 
   app.controllers.Mains = (function(_super) {
     var Main;
