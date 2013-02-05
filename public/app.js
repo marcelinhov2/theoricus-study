@@ -13211,38 +13211,29 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
   })(theoricus.mvc.View);
 
   app.components.VisualIdentity = (function(_super) {
+    var hideSocial, hideTitle, showSocial, showTitle,
+      _this = this;
 
     __extends(VisualIdentity, _super);
 
-    VisualIdentity.prototype.el = '.visual_identity';
-
     function VisualIdentity() {
-      this.hideVisualIdentity = __bind(this.hideVisualIdentity, this);
-
-      this.showVisualIdentity = __bind(this.showVisualIdentity, this);
-
-      this.hideSocial = __bind(this.hideSocial, this);
-
-      this.hideTitle = __bind(this.hideTitle, this);
-
-      this.showSocial = __bind(this.showSocial, this);
-
-      this.showTitle = __bind(this.showTitle, this);
-      this.title = $(this.el + ' h1');
-      this.socials = $(this.el + ' ul li');
+      return VisualIdentity.__super__.constructor.apply(this, arguments);
     }
 
-    VisualIdentity.prototype.showTitle = function(callback) {
-      return this.title.fadeIn('slow', function() {
+    VisualIdentity.title = '.visual_identity h1';
+
+    VisualIdentity.socials = '.visual_identity  ul li';
+
+    showTitle = function(callback) {
+      return $(VisualIdentity.title).fadeIn('slow', function() {
         if (callback != null) {
           return callback();
         }
       });
     };
 
-    VisualIdentity.prototype.showSocial = function(callback) {
-      var _this = this;
-      return this.socials.each(function(i, item) {
+    showSocial = function(callback) {
+      return $(VisualIdentity.socials).each(function(i, item) {
         var delay, link;
         item = $(item);
         link = item.find("a");
@@ -13255,20 +13246,19 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
       });
     };
 
-    VisualIdentity.prototype.hideTitle = function(callback) {
-      return this.title.fadeOut('slow', function() {
+    hideTitle = function(callback) {
+      return $(VisualIdentity.title).fadeOut('slow', function() {
         if (callback != null) {
           return callback();
         }
       });
     };
 
-    VisualIdentity.prototype.hideSocial = function(callback) {
-      var _this = this;
-      return this.socials.each(function(i, item) {
+    hideSocial = function(callback) {
+      return $(VisualIdentity.socials).each(function(i, item) {
         var delay, link, reverse_index;
-        reverse_index = (_this.socials.length - 1) - i;
-        item = $(_this.socials[reverse_index]);
+        reverse_index = (VisualIdentity.socials.length - 1) - i;
+        item = $(VisualIdentity.socials[reverse_index]);
         link = item.find("a");
         delay = 150 * i;
         return item.delay(delay).fadeOut("slow");
@@ -13279,21 +13269,21 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
       });
     };
 
-    VisualIdentity.prototype.showVisualIdentity = function() {
+    VisualIdentity.showVisualIdentity = function() {
       var showQueue;
-      showQueue = new app.utils.Queue([this.showTitle, this.showSocial]);
+      showQueue = new app.utils.Queue([showTitle, showSocial]);
       return showQueue.start();
     };
 
-    VisualIdentity.prototype.hideVisualIdentity = function() {
+    VisualIdentity.hideVisualIdentity = function() {
       var hideQueue;
-      hideQueue = new app.utils.Queue([this.hideSocial, this.hideTitle]);
+      hideQueue = new app.utils.Queue([hideSocial, hideTitle]);
       return hideQueue.start();
     };
 
     return VisualIdentity;
 
-  })(app.AppView);
+  }).call(this, app.AppView);
 
   app.controllers.Mains = (function(_super) {
     var Main;
@@ -13350,9 +13340,7 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     }
 
     Home.prototype.after_render = function() {
-      var visual_identity;
-      visual_identity = new app.components.VisualIdentity;
-      return visual_identity.showVisualIdentity();
+      return app.components.VisualIdentity.showVisualIdentity();
     };
 
     return Home;

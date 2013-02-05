@@ -1,18 +1,15 @@
 #<< app/utils/utils
 
 class app.components.VisualIdentity extends app.AppView
-  el: '.visual_identity'
+  @title   : '.visual_identity h1'
+  @socials : '.visual_identity  ul li'
 
-  constructor : ->
-    @title = $(@el + ' h1')
-    @socials = $(@el + ' ul li')
-
-  showTitle : (callback) =>
-    @title.fadeIn 'slow', ->
+  showTitle = (callback) =>
+    $(@title).fadeIn 'slow', ->
       do callback if callback?
 
-  showSocial : (callback) =>
-    @socials.each((i, item) =>
+  showSocial = (callback) =>
+    $(@socials).each((i, item) =>
       item = $(item)
       link = item.find("a")
       delay = 150 * i
@@ -21,12 +18,12 @@ class app.components.VisualIdentity extends app.AppView
     ).promise().done =>
       do callback if callback?
 
-  hideTitle : (callback) =>
-    @title.fadeOut 'slow', ->
+  hideTitle = (callback) =>
+    $(@title).fadeOut 'slow', ->
       do callback if callback?
 
-  hideSocial : (callback) =>
-    @socials.each( (i, item) =>
+  hideSocial = (callback) =>
+    $(@socials).each( (i, item) =>
       reverse_index = (@socials.length - 1) - i
 
       item = $(@socials[reverse_index])
@@ -37,10 +34,10 @@ class app.components.VisualIdentity extends app.AppView
     ).promise().done =>
       do callback if callback?
 
-  showVisualIdentity : =>
-    showQueue = new app.utils.Queue [@showTitle, @showSocial]
+  @showVisualIdentity : =>
+    showQueue = new app.utils.Queue [showTitle, showSocial]
     do showQueue.start
 
-  hideVisualIdentity : =>
-    hideQueue = new app.utils.Queue [@hideSocial, @hideTitle]
+  @hideVisualIdentity : =>
+    hideQueue = new app.utils.Queue [hideSocial, hideTitle]
     do hideQueue.start
