@@ -39,7 +39,7 @@
         var delay, link;
         item = $(item);
         link = item.find("a");
-        delay = 200 * i;
+        delay = 150 * i;
         return item.delay(delay).fadeIn("slow");
       }).promise().done(function() {
         if (callback != null) {
@@ -63,7 +63,7 @@
         reverse_index = (_this.socials.length - 1) - i;
         item = $(_this.socials[reverse_index]);
         link = item.find("a");
-        delay = 200 * i;
+        delay = 150 * i;
         return item.delay(delay).fadeOut("slow");
       }).promise().done(function() {
         if (callback != null) {

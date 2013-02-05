@@ -15,7 +15,7 @@ class app.components.VisualIdentity extends app.AppView
     @socials.each((i, item) =>
       item = $(item)
       link = item.find("a")
-      delay = 200 * i
+      delay = 150 * i
       
       item.delay(delay).fadeIn "slow"
     ).promise().done =>
@@ -31,7 +31,7 @@ class app.components.VisualIdentity extends app.AppView
 
       item = $(@socials[reverse_index])
       link = item.find("a")
-      delay = 200 * i
+      delay = 150 * i
       
       item.delay(delay).fadeOut "slow"
     ).promise().done =>
