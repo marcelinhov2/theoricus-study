@@ -8,4 +8,4 @@ enable_auto_transitions = false
 autobind = false
 
 # vendors
-vendors = ['jquery.js', 'easing.js', 'json2.js', 'lettering.js', 'lettering-animate.js']
+vendors = ['jquery.js', 'json2.js', 'lettering.js', 'lettering-animate.js']

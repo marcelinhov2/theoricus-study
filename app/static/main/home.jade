@@ -1,6 +1,7 @@
 .visual_identity
-	h1 #{name}
+	div.title
+		h1 #{name}
 	ul.social
 		for social in socials
 			li
-				a(href="#{social.url}", class="#{social.klass} semiTransparent fadeHover") #{social.name}
+				a(href="#{social.url}", class="#{social.klass} fadeHover") #{social.name}

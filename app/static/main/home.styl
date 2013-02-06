@@ -2,19 +2,30 @@
 @import "../global/_global"
 
 .visual_identity 
-	h1
-		background:url('../images/sprite.png') no-repeat
-		text-indent:-9999px
-		display: none
+	.title
+		position: relative
+		height: 90px
+		margin-bottom: 37px
+		h1
+			position: absolute
+			top: 40px
+			background:url('../images/sprite.png') no-repeat
+			text-indent:-9999px
+			opacity: 0
 	.social
 		margin: 0 auto
 		> li
-			display: none
+			position: relative
+			width: 96px
+			height: 96px
 			float: left
 			&:last-child
 				margin-right:0px !important
 			
 			> a
+				position: absolute
+				top: 40px
+				opacity: 0
 				display:block
 				background:url('../images/sprite.png') no-repeat
 				text-indent:-9999px

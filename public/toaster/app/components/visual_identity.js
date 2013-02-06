@@ -14,23 +14,39 @@
 
     VisualIdentity.title = '.visual_identity h1';
 
-    VisualIdentity.socials = '.visual_identity  ul li';
+    VisualIdentity.socials = '.visual_identity  ul li a';
 
     showTitle = function(callback) {
-      return $(VisualIdentity.title).fadeIn('slow', function() {
-        if (callback != null) {
-          return callback();
-        }
+      var time;
+      time = 0.8;
+      return TweenLite.to($(VisualIdentity.title), time, {
+        css: {
+          opacity: 1,
+          top: 0,
+          left: 0
+        },
+        ease: Back.easeOut,
+        onComplete: callback != null ? callback : void 0
       });
     };
 
     showSocial = function(callback) {
+      var delay, time;
+      delay = 0;
+      time = 0.5;
       return $(VisualIdentity.socials).each(function(i, item) {
-        var delay, link;
         item = $(item);
-        link = item.find("a");
-        delay = 150 * i;
-        return item.delay(delay).fadeIn("slow");
+        delay += .20;
+        time += .05;
+        return TweenLite.to(item, time, {
+          css: {
+            opacity: 0.3,
+            top: 0,
+            left: 0
+          },
+          delay: delay,
+          ease: Back.easeOut.config(3)
+        });
       }).promise().done(function() {
         if (callback != null) {
           return callback();

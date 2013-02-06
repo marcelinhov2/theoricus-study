@@ -132,22 +132,38 @@ body {
   min-width: 960px;
   position: relative;
 }
-.visual_identity h1 {
+.visual_identity .title {
+  position: relative;
+  height: 90px;
+  margin-bottom: 37px;
+}
+.visual_identity .title h1 {
+  position: absolute;
+  top: 40px;
   background: url("../images/sprite.png") no-repeat;
   text-indent: -9999px;
-  display: none;
+  opacity: 0;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  filter: alpha(opacity=0);
 }
 .visual_identity .social {
   margin: 0 auto;
 }
 .visual_identity .social > li {
-  display: none;
+  position: relative;
+  width: 96px;
+  height: 96px;
   float: left;
 }
 .visual_identity .social > li:last-child {
   margin-right: 0px !important;
 }
 .visual_identity .social > li > a {
+  position: absolute;
+  top: 40px;
+  opacity: 0;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  filter: alpha(opacity=0);
   display: block;
   background: url("../images/sprite.png") no-repeat;
   text-indent: -9999px;
