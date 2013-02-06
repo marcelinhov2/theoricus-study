@@ -13054,10 +13054,10 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 // ROOT
 (function() {app.root = '/home';}).call( this );
 
-document.write('<scri'+'pt src="/toaster/app/utils/queue.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/app_model.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/utils/utils.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/models/main.js"></scr'+'ipt>')
+document.write('<scri'+'pt src="/toaster/app/utils/queue.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/app.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/app_controller.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/app_view.js"></scr'+'ipt>')

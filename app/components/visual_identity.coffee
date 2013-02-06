@@ -34,10 +34,10 @@ class app.components.VisualIdentity extends app.AppView
     ).promise().done =>
       do callback if callback?
 
-  @showVisualIdentity : =>
+  @show : =>
     showQueue = new app.utils.Queue [showTitle, showSocial]
     do showQueue.start
 
-  @hideVisualIdentity : =>
+  @hide : =>
     hideQueue = new app.utils.Queue [hideSocial, hideTitle]
     do hideQueue.start

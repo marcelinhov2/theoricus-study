@@ -13,7 +13,7 @@
     }
 
     Home.prototype.after_render = function() {
-      return app.components.VisualIdentity.showVisualIdentity();
+      return app.components.VisualIdentity.show();
     };
 
     return Home;

@@ -61,13 +61,13 @@
       });
     };
 
-    VisualIdentity.showVisualIdentity = function() {
+    VisualIdentity.show = function() {
       var showQueue;
       showQueue = new app.utils.Queue([showTitle, showSocial]);
       return showQueue.start();
     };
 
-    VisualIdentity.hideVisualIdentity = function() {
+    VisualIdentity.hide = function() {
       var hideQueue;
       hideQueue = new app.utils.Queue([hideSocial, hideTitle]);
       return hideQueue.start();

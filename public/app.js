@@ -13055,49 +13055,9 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 (function() {app.root = '/home';}).call( this );
 
 (function() {
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  app.utils.Queue = (function() {
-
-    Queue.prototype.index = null;
-
-    Queue.prototype.methods = null;
-
-    function Queue(methods) {
-      this.methods = methods;
-      this.when_done = __bind(this.when_done, this);
-
-      this.execute = __bind(this.execute, this);
-
-      this.start = __bind(this.start, this);
-
-      this.index = 0;
-    }
-
-    Queue.prototype.start = function(after_all) {
-      this.after_all = after_all;
-      return this.execute();
-    };
-
-    Queue.prototype.execute = function() {
-      if (this.index === this.methods.length && (this.after_all != null)) {
-        return this.after_all();
-      }
-      if (this.methods[this.index]) {
-        return this.methods[this.index](this.when_done);
-      }
-    };
-
-    Queue.prototype.when_done = function() {
-      this.index++;
-      return this.execute();
-    };
-
-    return Queue;
-
-  })();
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   app.AppModel = (function(_super) {
 
@@ -13154,6 +13114,46 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     return Main;
 
   })(app.AppModel);
+
+  app.utils.Queue = (function() {
+
+    Queue.prototype.index = null;
+
+    Queue.prototype.methods = null;
+
+    function Queue(methods) {
+      this.methods = methods;
+      this.when_done = __bind(this.when_done, this);
+
+      this.execute = __bind(this.execute, this);
+
+      this.start = __bind(this.start, this);
+
+      this.index = 0;
+    }
+
+    Queue.prototype.start = function(after_all) {
+      this.after_all = after_all;
+      return this.execute();
+    };
+
+    Queue.prototype.execute = function() {
+      if (this.index === this.methods.length && (this.after_all != null)) {
+        return this.after_all();
+      }
+      if (this.methods[this.index]) {
+        return this.methods[this.index](this.when_done);
+      }
+    };
+
+    Queue.prototype.when_done = function() {
+      this.index++;
+      return this.execute();
+    };
+
+    return Queue;
+
+  })();
 
   app.App = (function(_super) {
 
@@ -13269,13 +13269,13 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
       });
     };
 
-    VisualIdentity.showVisualIdentity = function() {
+    VisualIdentity.show = function() {
       var showQueue;
       showQueue = new app.utils.Queue([showTitle, showSocial]);
       return showQueue.start();
     };
 
-    VisualIdentity.hideVisualIdentity = function() {
+    VisualIdentity.hide = function() {
       var hideQueue;
       hideQueue = new app.utils.Queue([hideSocial, hideTitle]);
       return hideQueue.start();
@@ -13340,7 +13340,7 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     }
 
     Home.prototype.after_render = function() {
-      return app.components.VisualIdentity.showVisualIdentity();
+      return app.components.VisualIdentity.show();
     };
 
     return Home;
