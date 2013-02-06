@@ -6,9 +6,9 @@ class app.utils.Utils
 		, time
 
 	@showLoad : =>
-		$("body").append "<a id='loader'>Loading...</a>", ->
-			$("#loader").fadeIn "slow"
+		$("body").append "<a id='loader'>Loading...</a>"
+		$("#loader").fadeIn "slow"
 
 	@hideLoad : =>
 		$("#loader").fadeOut "slow", ->
-			$("body").remove "<a id='loader'>Loading...</a>"		
+			do $(@).remove

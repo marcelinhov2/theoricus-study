@@ -11,14 +11,13 @@
     };
 
     Utils.showLoad = function() {
-      return $("body").append("<a id='loader'>Loading...</a>", function() {
-        return $("#loader").fadeIn("slow");
-      });
+      $("body").append("<a id='loader'>Loading...</a>");
+      return $("#loader").fadeIn("slow");
     };
 
     Utils.hideLoad = function() {
       return $("#loader").fadeOut("slow", function() {
-        return $("body").remove("<a id='loader'>Loading...</a>");
+        return $(this).remove();
       });
     };
 

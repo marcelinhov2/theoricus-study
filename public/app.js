@@ -12877,14 +12877,13 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     };
 
     Utils.showLoad = function() {
-      return $("body").append("<a id='loader'>Loading...</a>", function() {
-        return $("#loader").fadeIn("slow");
-      });
+      $("body").append("<a id='loader'>Loading...</a>");
+      return $("#loader").fadeIn("slow");
     };
 
     Utils.hideLoad = function() {
       return $("#loader").fadeOut("slow", function() {
-        return $("body").remove("<a id='loader'>Loading...</a>");
+        return $(this).remove();
       });
     };
 
@@ -13147,10 +13146,12 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 
     function Home() {
       this.after_render = __bind(this.after_render, this);
-      return Home.__super__.constructor.apply(this, arguments);
+      Home.__super__.constructor.apply(this, arguments);
+      app.utils.Utils.showLoad();
     }
 
     Home.prototype.after_render = function() {
+      app.utils.Utils.hideLoad();
       return app.components.VisualIdentity.show();
     };
 
