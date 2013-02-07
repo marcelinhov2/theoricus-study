@@ -1,7 +1,7 @@
 .visual_identity
 	div.title
-		h1 #{name}
+		h1 #{classname}
 	ul.social
-		for social in socials
+		for link in links
 			li
-				a(href="#{social.url}", class="#{social.klass} fadeHover") #{social.name}
+				a(href="#{link.link_url}", class="#{link.link_description} fadeHover") #{link.link_name}

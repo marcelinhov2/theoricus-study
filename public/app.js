@@ -12838,7 +12838,7 @@ if (!JSON) {
 var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'main':{}},'utils':{},'views':{'main':{}}};
 
 // TEMPLATES
-(function() {app.templates = { 'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><div class="title"><h1><!-- @name -->' + escape((interp = name) == null ? '' : interp) + '<!-- /@name --></h1></div><ul class="social">');;(function(){  if ('number' == typeof socials.length) {    for (var $index = 0, $l = socials.length; $index < $l; $index++) {      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in socials) {      $l++;      var social = socials[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (social.url) + ""), "class": ("" + (social.klass) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = social.name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
+(function() {app.templates = { 'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><div class="title"><h1><!-- @classname -->' + escape((interp = classname) == null ? '' : interp) + '<!-- /@classname --></h1></div><ul class="social">');;(function(){  if ('number' == typeof links.length) {    for (var $index = 0, $l = links.length; $index < $l; $index++) {      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in links) {      $l++;      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
 
 // CONFIG
 (function() {app.config = {animate_at_startup: false,enable_auto_transitions: false,vendors: ["jquery.js,json2.js,lettering.js,lettering-animate.js"],autobind: false};}).call( this );
@@ -12861,6 +12861,55 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     function AppModel() {
       return AppModel.__super__.constructor.apply(this, arguments);
     }
+
+    AppModel._request = function(method, url, data) {
+      var fetcher, req,
+        _this = this;
+      if (data == null) {
+        data = '';
+      }
+      fetcher = new theoricus.mvc.lib.Fetcher;
+      req = $.ajax({
+        url: url,
+        type: method,
+        data: data,
+        async: false
+      });
+      req.done(function(data) {
+        fetcher.loaded = true;
+        fetcher.records = _this._instantiate(data);
+        return typeof fetcher.onload === "function" ? fetcher.onload(fetcher.records) : void 0;
+      });
+      req.error(function(error) {
+        fetcher.error = true;
+        if (fetcher.onerror != null) {
+          return fetcher.onerror(error);
+        } else {
+          throw error;
+        }
+      });
+      return fetcher;
+    };
+
+    AppModel._instantiate = function(data) {
+      var Factory, classname, records, _collection;
+      Factory = theoricus.core.Factory;
+      classname = (("" + this).match(/function\s(\w+)/))[1];
+      records = [];
+      $.map(data, function(value, key) {
+        var model, obj;
+        obj = {};
+        obj[key] = value;
+        model = Factory.model(classname, obj);
+        return records.push(model);
+      });
+      _collection = records;
+      if (records.length === 1) {
+        return records[0];
+      } else {
+        return records;
+      }
+    };
 
     return AppModel;
 
@@ -12891,18 +12940,28 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 
   }).call(this);
 
+  app.models.Links = (function(_super) {
+
+    __extends(Links, _super);
+
+    function Links() {
+      return Links.__super__.constructor.apply(this, arguments);
+    }
+
+    Links.rest({
+      'all': ['GET', 'http://localhost/portfolio/api/get_links/']
+    });
+
+    return Links;
+
+  })(app.AppModel);
+
   app.models.Main = (function(_super) {
 
     __extends(Main, _super);
 
-    Main.fields({
-      name: String,
-      socials: Array
-    });
-
-    function Main(name, socials) {
-      this.name = name;
-      this.socials = socials;
+    function Main() {
+      return Main.__super__.constructor.apply(this, arguments);
     }
 
     return Main;
@@ -13096,7 +13155,7 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
   }).call(this, app.AppView);
 
   app.controllers.Mains = (function(_super) {
-    var Main;
+    var Links, Main;
 
     __extends(Mains, _super);
 
@@ -13106,33 +13165,13 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 
     Main = app.models.Main;
 
+    Links = app.models.Links;
+
     Mains.prototype.home = function() {
-      var model, name, socials, view;
-      socials = [
-        {
-          name: 'Linkedin',
-          klass: 'linkedin',
-          url: 'http://www.linkedin.com/in/meandrade'
-        }, {
-          name: 'Twitter',
-          klass: 'twitter',
-          url: 'http://twitter.com/marcelinhov2'
-        }, {
-          name: 'Facebook',
-          klass: 'facebook',
-          url: 'http://www.facebook.com/marcelinhov2'
-        }, {
-          name: 'Email',
-          klass: 'email',
-          url: 'mailto:marceloandrade150@gmail.com?subject=Contato via Portfólio'
-        }, {
-          name: 'PDF',
-          klass: 'pdf',
-          url: '#'
-        }
-      ];
+      var model, name, view;
       name = 'Marcelo Andrade Front-End Developer';
-      model = new Main(name, socials);
+      model = Links.all();
+      console.log(model);
       return view = this.render("main/home", model);
     };
 
