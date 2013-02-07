@@ -40,17 +40,16 @@
     };
 
     AppModel._instantiate = function(data) {
-      var Factory, classname, records, _collection;
+      var Factory, classname, model, obj, records, _collection;
       Factory = theoricus.core.Factory;
       classname = (("" + this).match(/function\s(\w+)/))[1];
       records = [];
+      obj = {};
       $.map(data, function(value, key) {
-        var model, obj;
-        obj = {};
-        obj[key] = value;
-        model = Factory.model(classname, obj);
-        return records.push(model);
+        return obj[key] = value;
       });
+      model = Factory.model(classname, obj);
+      records.push(model);
       _collection = records;
       if (records.length === 1) {
         return records[0];

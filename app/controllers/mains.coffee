@@ -1,4 +1,5 @@
 #<< app/app_controller
+#<< app/utils/utils
 #<< app/models/main
 #<< app/models/links
 
@@ -7,7 +8,7 @@ class app.controllers.Mains extends app.AppController
 	{Links} = app.models
 
 	home: ->
-		name  = 'Marcelo Andrade Front-End Developer'
+		do app.utils.Utils.showLoad
+		
 		model = do Links.all
-		console.log model
 		view  = @render "main/home", model

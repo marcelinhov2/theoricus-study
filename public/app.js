@@ -12838,7 +12838,7 @@ if (!JSON) {
 var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'main':{}},'utils':{},'views':{'main':{}}};
 
 // TEMPLATES
-(function() {app.templates = { 'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><div class="title"><h1><!-- @classname -->' + escape((interp = classname) == null ? '' : interp) + '<!-- /@classname --></h1></div><ul class="social">');;(function(){  if ('number' == typeof links.length) {    for (var $index = 0, $l = links.length; $index < $l; $index++) {      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in links) {      $l++;      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
+(function() {app.templates = { 'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><div class="title"><h1>Marcelo Andrade Front-End Developer</h1></div><ul class="social">');;(function(){  if ('number' == typeof links.length) {    for (var $index = 0, $l = links.length; $index < $l; $index++) {      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in links) {      $l++;      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
 
 // CONFIG
 (function() {app.config = {animate_at_startup: false,enable_auto_transitions: false,vendors: ["jquery.js,json2.js,lettering.js,lettering-animate.js"],autobind: false};}).call( this );
@@ -12892,17 +12892,16 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     };
 
     AppModel._instantiate = function(data) {
-      var Factory, classname, records, _collection;
+      var Factory, classname, model, obj, records, _collection;
       Factory = theoricus.core.Factory;
       classname = (("" + this).match(/function\s(\w+)/))[1];
       records = [];
+      obj = {};
       $.map(data, function(value, key) {
-        var model, obj;
-        obj = {};
-        obj[key] = value;
-        model = Factory.model(classname, obj);
-        return records.push(model);
+        return obj[key] = value;
       });
+      model = Factory.model(classname, obj);
+      records.push(model);
       _collection = records;
       if (records.length === 1) {
         return records[0];
@@ -12930,9 +12929,12 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
       return $("#loader").fadeIn("slow");
     };
 
-    Utils.hideLoad = function() {
+    Utils.hideLoad = function(callback) {
       return $("#loader").fadeOut("slow", function() {
-        return $(this).remove();
+        $(this).remove();
+        if (callback != null) {
+          return callback();
+        }
       });
     };
 
@@ -13168,10 +13170,9 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     Links = app.models.Links;
 
     Mains.prototype.home = function() {
-      var model, name, view;
-      name = 'Marcelo Andrade Front-End Developer';
+      var model, view;
+      app.utils.Utils.showLoad();
       model = Links.all();
-      console.log(model);
       return view = this.render("main/home", model);
     };
 
@@ -13186,12 +13187,10 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     function Home() {
       this.after_render = __bind(this.after_render, this);
       Home.__super__.constructor.apply(this, arguments);
-      app.utils.Utils.showLoad();
     }
 
     Home.prototype.after_render = function() {
-      app.utils.Utils.hideLoad();
-      return app.components.VisualIdentity.show();
+      return app.utils.Utils.hideLoad(app.components.VisualIdentity.show);
     };
 
     return Home;

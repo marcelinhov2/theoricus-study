@@ -16,10 +16,9 @@
     Links = app.models.Links;
 
     Mains.prototype.home = function() {
-      var model, name, view;
-      name = 'Marcelo Andrade Front-End Developer';
+      var model, view;
+      app.utils.Utils.showLoad();
       model = Links.all();
-      console.log(model);
       return view = this.render("main/home", model);
     };
 

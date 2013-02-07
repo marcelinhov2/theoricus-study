@@ -9,6 +9,7 @@ class app.utils.Utils
 		$("body").append "<a id='loader'>Loading...</a>"
 		$("#loader").fadeIn "slow"
 
-	@hideLoad : =>
+	@hideLoad : (callback) =>
 		$("#loader").fadeOut "slow", ->
 			do $(@).remove
+			do callback if callback?

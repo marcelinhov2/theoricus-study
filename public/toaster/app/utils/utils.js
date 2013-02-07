@@ -15,9 +15,12 @@
       return $("#loader").fadeIn("slow");
     };
 
-    Utils.hideLoad = function() {
+    Utils.hideLoad = function(callback) {
       return $("#loader").fadeOut("slow", function() {
-        return $(this).remove();
+        $(this).remove();
+        if (callback != null) {
+          return callback();
+        }
       });
     };
 

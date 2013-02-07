@@ -22,13 +22,13 @@ class app.AppModel extends theoricus.mvc.Model
     Factory = theoricus.core.Factory
     classname = ("#{@}".match /function\s(\w+)/)[1]
     records = []
+    obj = {}
 
     $.map data, (value, key) ->
-      obj = {}
       obj[key] = value
 
-      model = (Factory.model classname, obj)
-      records.push model
+    model = (Factory.model classname, obj)
+    records.push model
 
     _collection = records
 
