@@ -145,6 +145,7 @@ body {
   opacity: 0;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   filter: alpha(opacity=0);
+  display: none;
 }
 .visual_identity .social {
   margin: 0 auto;
@@ -164,7 +165,7 @@ body {
   opacity: 0;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   filter: alpha(opacity=0);
-  display: block;
+  display: none;
   background: url("../images/sprite.png") no-repeat;
   text-indent: -9999px;
 }

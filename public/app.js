@@ -13039,7 +13039,8 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
         css: {
           opacity: 1,
           top: 0,
-          left: 0
+          left: 0,
+          display: 'block'
         },
         ease: Back.easeOut,
         onComplete: callback != null ? callback : void 0
@@ -13058,7 +13059,8 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
           css: {
             opacity: 0.3,
             top: 0,
-            left: 0
+            left: 0,
+            display: 'block'
           },
           delay: delay,
           ease: Back.easeOut.config(3)

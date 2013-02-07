@@ -7,7 +7,7 @@ class app.components.VisualIdentity extends app.AppView
   showTitle = (callback) =>
     time = 0.8
 
-    TweenLite.to $(@title), time, {css:{opacity:1, top:0, left:0},ease:Back.easeOut, onComplete: callback if callback?}  
+    TweenLite.to $(@title), time, {css:{opacity:1, top:0, left:0, display:'block'},ease:Back.easeOut, onComplete: callback if callback?}  
 
   showSocial = (callback) =>
     delay = 0
@@ -18,7 +18,7 @@ class app.components.VisualIdentity extends app.AppView
       delay += .20
       time += .05
       
-      TweenLite.to item, time, {css:{opacity:0.3, top:0, left:0},delay:delay,ease:Back.easeOut.config(3)}
+      TweenLite.to item, time, {css:{opacity:0.3, top:0, left:0, display:'block'},delay:delay,ease:Back.easeOut.config(3)}
 
       # item.delay(delay).fadeIn "slow"
     ).promise().done =>
