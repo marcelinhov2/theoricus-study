@@ -21,7 +21,7 @@
       var $item;
       $item = $(event.currentTarget);
       if (event.type === 'mouseover') {
-        return app.utils.Utils.fadeHover($item, 1, 500);
+        return app.utils.Utils.fadeHover($item, 1, 250);
       } else {
         return app.utils.Utils.fadeHover($item, .3, 250);
       }

@@ -10,6 +10,6 @@ class app.AppView extends theoricus.mvc.View
 		$item = $( event.currentTarget )
 
 		if event.type is 'mouseover'
-			app.utils.Utils.fadeHover $item, 1, 500
+			app.utils.Utils.fadeHover $item, 1, 250
 		else
 			app.utils.Utils.fadeHover $item, .3, 250

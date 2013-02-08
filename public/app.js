@@ -11298,8 +11298,7 @@ var theoricus = window.theoricus = {'config':{},'core':{},'mvc':{'lib':{}},'util
       req = $.ajax({
         url: url,
         type: method,
-        data: data,
-        async: false
+        data: data
       });
       req.done(function(data) {
         fetcher.loaded = true;
@@ -11325,17 +11324,17 @@ var theoricus = window.theoricus = {'config':{},'core':{},'mvc':{'lib':{}},'util
 
 
     Model._instantiate = function(data) {
-      var Factory, classname, model, obj, records;
+      var Factory, classname, model, record, records, _i, _len, _ref;
       Factory = theoricus.core.Factory;
       classname = (("" + this).match(/function\s(\w+)/))[1];
       records = [];
-      obj = {};
-      $.map(data, function(value, key) {
-        return obj[key] = value;
-      });
-      model = Factory.model(classname, obj);
-      records.push(model);
-      _collection = records;
+      _ref = [].concat(data);
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        record = _ref[_i];
+        model = Factory.model(classname, record);
+        records.push(model);
+      }
+      _collection = _collection.concat(records);
       if (records.length === 1) {
         return records[0];
       } else {
