@@ -35,7 +35,7 @@
       var delay, time;
       delay = 0;
       time = 0.5;
-      return $(VisualIdentity.socials).each(function(i, item) {
+      $(VisualIdentity.socials).each(function(i, item) {
         item = $(item);
         delay += .20;
         time += .05;
@@ -49,34 +49,53 @@
           delay: delay,
           ease: Back.easeOut.config(3)
         });
-      }).promise().done(function() {
-        if (callback != null) {
-          return callback();
-        }
       });
+      if (callback != null) {
+        return callback();
+      }
     };
 
     hideTitle = function(callback) {
-      return $(VisualIdentity.title).fadeOut('slow', function() {
-        if (callback != null) {
-          return callback();
-        }
+      var time;
+      time = 0.5;
+      return TweenLite.to($(VisualIdentity.title), time, {
+        css: {
+          opacity: 0,
+          top: -20,
+          left: 0,
+          display: 'none'
+        },
+        ease: Back.easeOut,
+        onComplete: callback != null ? callback : void 0
       });
     };
 
     hideSocial = function(callback) {
-      return $(VisualIdentity.socials).each(function(i, item) {
-        var delay, link, reverse_index;
-        reverse_index = (VisualIdentity.socials.length - 1) - i;
-        item = $(VisualIdentity.socials[reverse_index]);
-        link = item.find("a");
-        delay = 150 * i;
-        return item.delay(delay).fadeOut("slow");
-      }).promise().done(function() {
+      var delay, time;
+      delay = 0;
+      time = 0.5;
+      $($(VisualIdentity.socials).get().reverse()).each(function(i, item) {
+        var tween;
+        item = $(item);
+        delay += .20;
+        time += .05;
+        return tween = TweenLite.to(item, time, {
+          css: {
+            opacity: 0,
+            top: -20,
+            left: 0,
+            display: 'none'
+          },
+          delay: delay,
+          ease: Back.easeOut.config(3)
+        });
+      });
+      delay += .20;
+      return setTimeout((function() {
         if (callback != null) {
           return callback();
         }
-      });
+      }), delay * 1000);
     };
 
     VisualIdentity.show = function() {

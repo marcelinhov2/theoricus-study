@@ -19,26 +19,32 @@ class app.components.VisualIdentity extends app.AppView
       time += .05
       
       TweenLite.to item, time, {css:{opacity:0.3, top:0, left:0, display:'block'},delay:delay,ease:Back.easeOut.config(3)}
+    )
 
-      # item.delay(delay).fadeIn "slow"
-    ).promise().done =>
-      do callback if callback?
+    do callback if callback?
 
   hideTitle = (callback) =>
-    $(@title).fadeOut 'slow', ->
-      do callback if callback?
+    time = 0.5
+
+    TweenLite.to $(@title), time, {css:{opacity:0, top:-20, left:0, display:'none'},ease:Back.easeOut, onComplete: callback if callback?}  
 
   hideSocial = (callback) =>
-    $(@socials).each( (i, item) =>
-      reverse_index = (@socials.length - 1) - i
+    delay = 0
+    time = 0.5
 
-      item = $(@socials[reverse_index])
-      link = item.find("a")
-      delay = 150 * i
+    $($(@socials).get().reverse()).each((i, item) =>
+      item = $(item)
+      delay += .20
+      time += .05
       
-      item.delay(delay).fadeOut "slow"
-    ).promise().done =>
+      tween = TweenLite.to item, time, {css:{opacity:0, top:-20, left:0, display:'none'},delay:delay,ease:Back.easeOut.config(3)}
+    )
+
+    delay += .20
+
+    setTimeout (->
       do callback if callback?
+    ), ( delay * 1000 )
 
   @show : =>
     showQueue = new app.utils.Queue [showTitle, showSocial]

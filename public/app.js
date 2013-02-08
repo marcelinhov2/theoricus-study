@@ -12862,6 +12862,54 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
       return AppModel.__super__.constructor.apply(this, arguments);
     }
 
+    AppModel._request = function(method, url, data) {
+      var fetcher, req,
+        _this = this;
+      if (data == null) {
+        data = '';
+      }
+      fetcher = new theoricus.mvc.lib.Fetcher;
+      req = $.ajax({
+        url: url,
+        type: method,
+        data: data,
+        async: false
+      });
+      req.done(function(data) {
+        fetcher.loaded = true;
+        fetcher.records = _this._instantiate(data);
+        return typeof fetcher.onload === "function" ? fetcher.onload(fetcher.records) : void 0;
+      });
+      req.error(function(error) {
+        fetcher.error = true;
+        if (fetcher.onerror != null) {
+          return fetcher.onerror(error);
+        } else {
+          throw error;
+        }
+      });
+      return fetcher;
+    };
+
+    AppModel._instantiate = function(data) {
+      var Factory, classname, model, obj, records, _collection;
+      Factory = theoricus.core.Factory;
+      classname = (("" + this).match(/function\s(\w+)/))[1];
+      records = [];
+      obj = {};
+      $.map(data, function(value, key) {
+        return obj[key] = value;
+      });
+      model = Factory.model(classname, obj);
+      records.push(model);
+      _collection = records;
+      if (records.length === 1) {
+        return records[0];
+      } else {
+        return records;
+      }
+    };
+
     return AppModel;
 
   })(theoricus.mvc.Model);
@@ -13007,7 +13055,7 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
       var $item;
       $item = $(event.currentTarget);
       if (event.type === 'mouseover') {
-        return app.utils.Utils.fadeHover($item, 1, 500);
+        return app.utils.Utils.fadeHover($item, 1, 250);
       } else {
         return app.utils.Utils.fadeHover($item, .3, 250);
       }
@@ -13050,7 +13098,7 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
       var delay, time;
       delay = 0;
       time = 0.5;
-      return $(VisualIdentity.socials).each(function(i, item) {
+      $(VisualIdentity.socials).each(function(i, item) {
         item = $(item);
         delay += .20;
         time += .05;
@@ -13064,34 +13112,53 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
           delay: delay,
           ease: Back.easeOut.config(3)
         });
-      }).promise().done(function() {
-        if (callback != null) {
-          return callback();
-        }
       });
+      if (callback != null) {
+        return callback();
+      }
     };
 
     hideTitle = function(callback) {
-      return $(VisualIdentity.title).fadeOut('slow', function() {
-        if (callback != null) {
-          return callback();
-        }
+      var time;
+      time = 0.5;
+      return TweenLite.to($(VisualIdentity.title), time, {
+        css: {
+          opacity: 0,
+          top: -20,
+          left: 0,
+          display: 'none'
+        },
+        ease: Back.easeOut,
+        onComplete: callback != null ? callback : void 0
       });
     };
 
     hideSocial = function(callback) {
-      return $(VisualIdentity.socials).each(function(i, item) {
-        var delay, link, reverse_index;
-        reverse_index = (VisualIdentity.socials.length - 1) - i;
-        item = $(VisualIdentity.socials[reverse_index]);
-        link = item.find("a");
-        delay = 150 * i;
-        return item.delay(delay).fadeOut("slow");
-      }).promise().done(function() {
+      var delay, time;
+      delay = 0;
+      time = 0.5;
+      $($(VisualIdentity.socials).get().reverse()).each(function(i, item) {
+        var tween;
+        item = $(item);
+        delay += .20;
+        time += .05;
+        return tween = TweenLite.to(item, time, {
+          css: {
+            opacity: 0,
+            top: -20,
+            left: 0,
+            display: 'none'
+          },
+          delay: delay,
+          ease: Back.easeOut.config(3)
+        });
+      });
+      delay += .20;
+      return setTimeout((function() {
         if (callback != null) {
           return callback();
         }
-      });
+      }), delay * 1000);
     };
 
     VisualIdentity.show = function() {
