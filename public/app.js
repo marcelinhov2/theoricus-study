@@ -12844,7 +12844,7 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 (function() {app.config = {animate_at_startup: false,enable_auto_transitions: false,vendors: ["jquery.js,json2.js,lettering.js,lettering-animate.js"],autobind: false};}).call( this );
 
 // ROUTES
-(function() {app.routes = {'/main': {to: 'mains/index',at: null,el: 'body'},'/home': {to: 'mains/home',at: '/main',el: '#container'},'/!/jobs': {to: 'mains/jobs',at: '/main',el: '#container'}};}).call( this );
+(function() {app.routes = {'/main': {to: 'mains/index',at: null,el: 'body'},'/home': {to: 'mains/home',at: '/main',el: '#container'}};}).call( this );
 
 // ROOT
 (function() {app.root = '/home';}).call( this );
@@ -12947,6 +12947,22 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     });
 
     return Links;
+
+  })(app.AppModel);
+
+  app.models.Posts = (function(_super) {
+
+    __extends(Posts, _super);
+
+    function Posts() {
+      return Posts.__super__.constructor.apply(this, arguments);
+    }
+
+    Posts.rest({
+      'all': ['GET', 'http://localhost/portfolio/api/get_recent_posts/']
+    });
+
+    return Posts;
 
   })(app.AppModel);
 
@@ -13190,22 +13206,6 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     return Index;
 
   })(app.AppView);
-
-  app.models.Posts = (function(_super) {
-
-    __extends(Posts, _super);
-
-    function Posts() {
-      return Posts.__super__.constructor.apply(this, arguments);
-    }
-
-    Posts.rest({
-      'all': ['GET', 'http://localhost/portfolio/api/get_recent_posts/']
-    });
-
-    return Posts;
-
-  })(app.AppModel);
 
 }).call(this);
 

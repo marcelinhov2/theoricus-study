@@ -10,8 +10,3 @@ class app.controllers.Mains extends app.AppController
 	home: ->
 		model = do Links.all
 		view  = @render "main/home", model
-
-	jobs: ->
-		alert 'teste'
-		model = do Links.all
-		view  = @render "main/home", model
