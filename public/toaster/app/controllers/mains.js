@@ -17,7 +17,13 @@
 
     Mains.prototype.home = function() {
       var model, view;
-      app.utils.Utils.showLoad();
+      model = Links.all();
+      return view = this.render("main/home", model);
+    };
+
+    Mains.prototype.jobs = function() {
+      var model, view;
+      alert('teste');
       model = Links.all();
       return view = this.render("main/home", model);
     };

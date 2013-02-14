@@ -10,6 +10,7 @@
     function Home() {
       this.after_render = __bind(this.after_render, this);
       Home.__super__.constructor.apply(this, arguments);
+      app.utils.Utils.showLoad();
     }
 
     Home.prototype.after_render = function() {

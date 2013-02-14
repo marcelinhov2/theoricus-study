@@ -10,5 +10,11 @@ match "/home"
 	at: "/main"
 	el: "#container"
 
+# JOBS
+match "/!/jobs"
+	to: "mains/jobs"
+	at: "/main"
+	el: "#container"
+
 # DEFAULT ROUTE
 root "/home"
