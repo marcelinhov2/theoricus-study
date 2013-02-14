@@ -12835,16 +12835,16 @@ if (!JSON) {
 	}
 
 })(jQuery)
-var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'main':{}},'utils':{},'views':{'main':{}}};
+var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'job':{},'main':{}},'utils':{},'views':{'job':{},'main':{}}};
 
 // TEMPLATES
-(function() {app.templates = { 'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><div class="title"><h1>Marcelo Andrade Front-End Developer</h1></div><ul class="social">');;(function(){  if ('number' == typeof links.length) {    for (var $index = 0, $l = links.length; $index < $l; $index++) {      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in links) {      $l++;      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div><a href="#!/jobs" class="next fadeHover">Get in</a>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
+(function() {app.templates = { 'job/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");},'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><div class="title"><h1>Marcelo Andrade Front-End Developer</h1></div><ul class="social">');;(function(){  if ('number' == typeof links.length) {    for (var $index = 0, $l = links.length; $index < $l; $index++) {      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in links) {      $l++;      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div><a href="#!/jobs" class="next fadeHover">Get in</a>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
 
 // CONFIG
 (function() {app.config = {animate_at_startup: false,enable_auto_transitions: false,vendors: ["jquery.js,json2.js,lettering.js,lettering-animate.js"],autobind: false};}).call( this );
 
 // ROUTES
-(function() {app.routes = {'/main': {to: 'mains/index',at: null,el: 'body'},'/home': {to: 'mains/home',at: '/main',el: '#container'}};}).call( this );
+(function() {app.routes = {'/main': {to: 'mains/index',at: null,el: 'body'},'/home': {to: 'mains/home',at: '/main',el: '#container'},'/!/jobs': {to: 'jobs/index',at: null,el: '#container'}};}).call( this );
 
 // ROOT
 (function() {app.root = '/home';}).call( this );
@@ -12894,6 +12894,74 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 
   }).call(this);
 
+  app.models.Posts = (function(_super) {
+
+    __extends(Posts, _super);
+
+    function Posts() {
+      return Posts.__super__.constructor.apply(this, arguments);
+    }
+
+    Posts.rest({
+      'all': ['GET', 'http://localhost/portfolio/api/get_recent_posts/']
+    });
+
+    return Posts;
+
+  })(app.AppModel);
+
+  app.models.Main = (function(_super) {
+
+    __extends(Main, _super);
+
+    function Main() {
+      return Main.__super__.constructor.apply(this, arguments);
+    }
+
+    return Main;
+
+  })(app.AppModel);
+
+  app.models.Links = (function(_super) {
+
+    __extends(Links, _super);
+
+    function Links() {
+      return Links.__super__.constructor.apply(this, arguments);
+    }
+
+    Links.rest({
+      'all': ['GET', 'http://localhost/portfolio/api/get_links/']
+    });
+
+    return Links;
+
+  })(app.AppModel);
+
+  app.models.Job = (function(_super) {
+
+    __extends(Job, _super);
+
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    		MODEL PROPERTIES
+    	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    */
+
+
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    		RESTFULL JSON SPECIFICATION
+    	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    */
+
+
+    function Job() {
+      return Job.__super__.constructor.apply(this, arguments);
+    }
+
+    return Job;
+
+  })(app.AppModel);
+
   app.utils.Queue = (function() {
 
     Queue.prototype.index = null;
@@ -12933,50 +13001,6 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     return Queue;
 
   })();
-
-  app.models.Links = (function(_super) {
-
-    __extends(Links, _super);
-
-    function Links() {
-      return Links.__super__.constructor.apply(this, arguments);
-    }
-
-    Links.rest({
-      'all': ['GET', 'http://localhost/portfolio/api/get_links/']
-    });
-
-    return Links;
-
-  })(app.AppModel);
-
-  app.models.Posts = (function(_super) {
-
-    __extends(Posts, _super);
-
-    function Posts() {
-      return Posts.__super__.constructor.apply(this, arguments);
-    }
-
-    Posts.rest({
-      'all': ['GET', 'http://localhost/portfolio/api/get_recent_posts/']
-    });
-
-    return Posts;
-
-  })(app.AppModel);
-
-  app.models.Main = (function(_super) {
-
-    __extends(Main, _super);
-
-    function Main() {
-      return Main.__super__.constructor.apply(this, arguments);
-    }
-
-    return Main;
-
-  })(app.AppModel);
 
   app.App = (function(_super) {
 
@@ -13145,6 +13169,42 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 
   }).call(this, app.AppView);
 
+  app.controllers.Jobs = (function(_super) {
+    var Job, Posts;
+
+    __extends(Jobs, _super);
+
+    function Jobs() {
+      return Jobs.__super__.constructor.apply(this, arguments);
+    }
+
+    Job = app.models.Job;
+
+    Posts = app.models.Posts;
+
+    Jobs.prototype.index = function() {
+      var model, view;
+      model = Posts.all();
+      return view = this.render("job/index", model);
+    };
+
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    		DEFAULT ACTION BEHAVIOR
+    		Override it to take control and customize as you wish
+    	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    */
+
+
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    		EXAMPLES
+    	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    */
+
+
+    return Jobs;
+
+  })(app.AppController);
+
   app.controllers.Mains = (function(_super) {
     var Links, Main;
 
@@ -13164,16 +13224,22 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
       return view = this.render("main/home", model);
     };
 
-    Mains.prototype.jobs = function() {
-      var model, view;
-      alert('teste');
-      model = Links.all();
-      return view = this.render("main/home", model);
-    };
-
     return Mains;
 
   })(app.AppController);
+
+  app.views.job.Index = (function(_super) {
+
+    __extends(Index, _super);
+
+    function Index() {
+      Index.__super__.constructor.apply(this, arguments);
+      app.utils.Utils.showLoad();
+    }
+
+    return Index;
+
+  })(app.AppView);
 
   app.views.main.Home = (function(_super) {
 

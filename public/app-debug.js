@@ -12835,30 +12835,33 @@ if (!JSON) {
 	}
 
 })(jQuery)
-var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'main':{}},'utils':{},'views':{'main':{}}};
+var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'job':{},'main':{}},'utils':{},'views':{'job':{},'main':{}}};
 
 // TEMPLATES
-(function() {app.templates = { 'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><div class="title"><h1>Marcelo Andrade Front-End Developer</h1></div><ul class="social">');;(function(){  if ('number' == typeof links.length) {    for (var $index = 0, $l = links.length; $index < $l; $index++) {      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in links) {      $l++;      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div><a href="#!/jobs" class="next fadeHover">Get in</a>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
+(function() {app.templates = { 'job/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");},'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><div class="title"><h1>Marcelo Andrade Front-End Developer</h1></div><ul class="social">');;(function(){  if ('number' == typeof links.length) {    for (var $index = 0, $l = links.length; $index < $l; $index++) {      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in links) {      $l++;      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div><a href="#!/jobs" class="next fadeHover">Get in</a>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
 
 // CONFIG
 (function() {app.config = {animate_at_startup: false,enable_auto_transitions: false,vendors: ["jquery.js,json2.js,lettering.js,lettering-animate.js"],autobind: false};}).call( this );
 
 // ROUTES
-(function() {app.routes = {'/main': {to: 'mains/index',at: null,el: 'body'},'/home': {to: 'mains/home',at: '/main',el: '#container'}};}).call( this );
+(function() {app.routes = {'/main': {to: 'mains/index',at: null,el: 'body'},'/home': {to: 'mains/home',at: '/main',el: '#container'},'/!/jobs': {to: 'jobs/index',at: null,el: '#container'}};}).call( this );
 
 // ROOT
 (function() {app.root = '/home';}).call( this );
 
 document.write('<scri'+'pt src="/toaster/app/app_model.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/utils/utils.js"></scr'+'ipt>')
-document.write('<scri'+'pt src="/toaster/app/utils/queue.js"></scr'+'ipt>')
-document.write('<scri'+'pt src="/toaster/app/models/links.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/models/posts.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/models/main.js"></scr'+'ipt>')
+document.write('<scri'+'pt src="/toaster/app/models/links.js"></scr'+'ipt>')
+document.write('<scri'+'pt src="/toaster/app/models/job.js"></scr'+'ipt>')
+document.write('<scri'+'pt src="/toaster/app/utils/queue.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/app.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/app_controller.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/app_view.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/components/visual_identity.js"></scr'+'ipt>')
+document.write('<scri'+'pt src="/toaster/app/controllers/jobs.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/controllers/mains.js"></scr'+'ipt>')
+document.write('<scri'+'pt src="/toaster/app/views/job/index.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/views/main/home.js"></scr'+'ipt>')
 document.write('<scri'+'pt src="/toaster/app/views/main/index.js"></scr'+'ipt>')
