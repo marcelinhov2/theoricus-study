@@ -13267,9 +13267,14 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 
     function Home() {
       this.after_render = __bind(this.after_render, this);
-      Home.__super__.constructor.apply(this, arguments);
-      app.utils.Utils.showLoad();
+
+      this.before_render = __bind(this.before_render, this);
+      return Home.__super__.constructor.apply(this, arguments);
     }
+
+    Home.prototype.before_render = function() {
+      return app.utils.Utils.showLoad();
+    };
 
     Home.prototype.after_render = function() {
       var queue;
