@@ -8,4 +8,5 @@ class app.views.main.Home extends app.AppView
     super
   
   after_render : =>
-  	app.utils.Utils.hideLoad app.components.VisualIdentity.show
+  	queue = new app.utils.Queue [ app.utils.Utils.hideLoad, app.components.VisualIdentity.show ]
+  	do queue.start

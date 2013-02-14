@@ -13,7 +13,9 @@
     }
 
     Home.prototype.after_render = function() {
-      return app.utils.Utils.hideLoad(app.components.VisualIdentity.show);
+      var queue;
+      queue = new app.utils.Queue([app.utils.Utils.hideLoad, app.components.VisualIdentity.show]);
+      return queue.start();
     };
 
     return Home;
