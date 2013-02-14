@@ -12838,7 +12838,7 @@ if (!JSON) {
 var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'job':{},'main':{}},'utils':{},'views':{'job':{},'main':{}}};
 
 // TEMPLATES
-(function() {app.templates = { 'job/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");},'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><div class="title"><h1>Marcelo Andrade Front-End Developer</h1></div><ul class="social">');;(function(){  if ('number' == typeof links.length) {    for (var $index = 0, $l = links.length; $index < $l; $index++) {      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in links) {      $l++;      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul><div class="getIn"><a href="#!/jobs" class="fadeHover">Get in</a></div></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
+(function() {app.templates = { 'job/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="jobs"></div>');}return buf.join("");},'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><div class="title"><h1>Marcelo Andrade Front-End Developer</h1></div><ul class="social">');;(function(){  if ('number' == typeof links.length) {    for (var $index = 0, $l = links.length; $index < $l; $index++) {      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in links) {      $l++;      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul><div class="getIn"><a href="#!/jobs" class="fadeHover">Get in</a></div></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
 
 // CONFIG
 (function() {app.config = {animate_at_startup: false,enable_auto_transitions: false,vendors: ["jquery.js,json2.js,lettering.js,lettering-animate.js"],autobind: false};}).call( this );
@@ -13253,9 +13253,19 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     __extends(Index, _super);
 
     function Index() {
-      Index.__super__.constructor.apply(this, arguments);
-      app.utils.Utils.showLoad();
+      this.after_render = __bind(this.after_render, this);
+
+      this.before_render = __bind(this.before_render, this);
+      return Index.__super__.constructor.apply(this, arguments);
     }
+
+    Index.prototype.before_render = function() {
+      return app.utils.Utils.showLoad();
+    };
+
+    Index.prototype.after_render = function() {
+      return console.log(this.data);
+    };
 
     return Index;
 

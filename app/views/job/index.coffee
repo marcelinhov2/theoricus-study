@@ -1,8 +1,11 @@
 #<< app/app_view
+#<< app/utils/utils
+#<< app/components/visual_identity
 
 class app.views.job.Index extends app.AppView
 
-	constructor : ->
-	    super
+  before_render : =>
+  	do app.utils.Utils.showLoad
 
-	    do app.utils.Utils.showLoad 
+  after_render : =>
+  	console.log @data
