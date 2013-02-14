@@ -12838,7 +12838,7 @@ if (!JSON) {
 var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'jade':{},'stylus':{}},'global':{},'job':{},'main':{}},'utils':{},'views':{'job':{},'main':{}}};
 
 // TEMPLATES
-(function() {app.templates = { 'job/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");},'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><div class="title"><h1>Marcelo Andrade Front-End Developer</h1></div><ul class="social">');;(function(){  if ('number' == typeof links.length) {    for (var $index = 0, $l = links.length; $index < $l; $index++) {      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in links) {      $l++;      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul></div><a href="#!/jobs" class="next fadeHover">Get in</a>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
+(function() {app.templates = { 'job/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");},'main/home': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div class="visual_identity"><div class="title"><h1>Marcelo Andrade Front-End Developer</h1></div><ul class="social">');;(function(){  if ('number' == typeof links.length) {    for (var $index = 0, $l = links.length; $index < $l; $index++) {      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  } else {    var $l = 0;    for (var $index in links) {      $l++;      var link = links[$index];buf.push('<li><a');buf.push(attrs({ 'href':("" + (link.link_url) + ""), "class": ("" + (link.link_description) + " fadeHover") }, {"href":true,"class":true}));buf.push('>' + escape((interp = link.link_name) == null ? '' : interp) + '</a></li>');    }  }}).call(this);buf.push('</ul><div class="getIn"><a href="#!/jobs" class="fadeHover">Get in</a></div></div>');}return buf.join("");},'main/index': function (locals, attrs, escape, rethrow, merge) {attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;var buf = [];with (locals || {}) {var interp;buf.push('<div id="container" class="main"></div>');}return buf.join("");} };}).call( this );
 
 // CONFIG
 (function() {app.config = {animate_at_startup: false,enable_auto_transitions: false,vendors: ["jquery.js,json2.js,lettering.js,lettering-animate.js"],autobind: false};}).call( this );
@@ -12894,22 +12894,6 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
 
   }).call(this);
 
-  app.models.Posts = (function(_super) {
-
-    __extends(Posts, _super);
-
-    function Posts() {
-      return Posts.__super__.constructor.apply(this, arguments);
-    }
-
-    Posts.rest({
-      'all': ['GET', 'http://localhost/portfolio/api/get_recent_posts/']
-    });
-
-    return Posts;
-
-  })(app.AppModel);
-
   app.models.Main = (function(_super) {
 
     __extends(Main, _super);
@@ -12935,6 +12919,22 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     });
 
     return Links;
+
+  })(app.AppModel);
+
+  app.models.Posts = (function(_super) {
+
+    __extends(Posts, _super);
+
+    function Posts() {
+      return Posts.__super__.constructor.apply(this, arguments);
+    }
+
+    Posts.rest({
+      'all': ['GET', 'http://localhost/portfolio/api/get_recent_posts/']
+    });
+
+    return Posts;
 
   })(app.AppModel);
 
@@ -13058,7 +13058,7 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
   })(theoricus.mvc.View);
 
   app.components.VisualIdentity = (function(_super) {
-    var hideSocial, hideTitle, showSocial, showTitle,
+    var hideSocial, hideTitle, showGetIn, showSocial, showTitle,
       _this = this;
 
     __extends(VisualIdentity, _super);
@@ -13070,6 +13070,8 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     VisualIdentity.title = '.visual_identity h1';
 
     VisualIdentity.socials = '.visual_identity  ul li a';
+
+    VisualIdentity.getIn = '.visual_identity  .getIn a';
 
     showTitle = function(callback) {
       var time;
@@ -13087,7 +13089,7 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     };
 
     showSocial = function(callback) {
-      var delay, time;
+      var delay, millisecounds, t, time;
       delay = 0;
       time = 0.5;
       $(VisualIdentity.socials).each(function(i, item) {
@@ -13105,9 +13107,27 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
           ease: Back.easeOut.config(3)
         });
       });
-      if (callback != null) {
-        return callback();
-      }
+      delay += .20;
+      millisecounds = parseInt(delay * 1000);
+      return t = setTimeout(function() {
+        if (callback != null) {
+          return callback();
+        }
+      }, millisecounds);
+    };
+
+    showGetIn = function() {
+      var time;
+      time = 0.8;
+      return TweenLite.to($(VisualIdentity.getIn), time, {
+        css: {
+          opacity: .3,
+          top: 0,
+          left: 0,
+          display: 'block'
+        },
+        ease: Back.easeOut
+      });
     };
 
     hideTitle = function(callback) {
@@ -13156,7 +13176,7 @@ var app = {'components':{},'controllers':{},'models':{},'static':{'_mixins':{'ja
     VisualIdentity.show = function() {
       var showQueue;
       showQueue = new app.utils.Queue([showTitle, showSocial]);
-      return showQueue.start();
+      return showQueue.start(showGetIn);
     };
 
     VisualIdentity.hide = function() {

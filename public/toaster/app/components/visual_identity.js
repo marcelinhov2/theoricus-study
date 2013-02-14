@@ -3,7 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   app.components.VisualIdentity = (function(_super) {
-    var hideSocial, hideTitle, showSocial, showTitle,
+    var hideSocial, hideTitle, showGetIn, showSocial, showTitle,
       _this = this;
 
     __extends(VisualIdentity, _super);
@@ -15,6 +15,8 @@
     VisualIdentity.title = '.visual_identity h1';
 
     VisualIdentity.socials = '.visual_identity  ul li a';
+
+    VisualIdentity.getIn = '.visual_identity  .getIn a';
 
     showTitle = function(callback) {
       var time;
@@ -32,7 +34,7 @@
     };
 
     showSocial = function(callback) {
-      var delay, time;
+      var delay, millisecounds, t, time;
       delay = 0;
       time = 0.5;
       $(VisualIdentity.socials).each(function(i, item) {
@@ -50,9 +52,27 @@
           ease: Back.easeOut.config(3)
         });
       });
-      if (callback != null) {
-        return callback();
-      }
+      delay += .20;
+      millisecounds = parseInt(delay * 1000);
+      return t = setTimeout(function() {
+        if (callback != null) {
+          return callback();
+        }
+      }, millisecounds);
+    };
+
+    showGetIn = function() {
+      var time;
+      time = 0.8;
+      return TweenLite.to($(VisualIdentity.getIn), time, {
+        css: {
+          opacity: .3,
+          top: 0,
+          left: 0,
+          display: 'block'
+        },
+        ease: Back.easeOut
+      });
     };
 
     hideTitle = function(callback) {
@@ -101,7 +121,7 @@
     VisualIdentity.show = function() {
       var showQueue;
       showQueue = new app.utils.Queue([showTitle, showSocial]);
-      return showQueue.start();
+      return showQueue.start(showGetIn);
     };
 
     VisualIdentity.hide = function() {

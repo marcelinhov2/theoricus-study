@@ -1,9 +1,11 @@
 .visual_identity
 	div.title
 		h1 Marcelo Andrade Front-End Developer
+	
 	ul.social
 		for link in links
 			li
 				a(href="#{link.link_url}", class="#{link.link_description} fadeHover") #{link.link_name}
 
-a(href="#!/jobs", class="next fadeHover") Get in
+	div.getIn
+		a(href="#!/jobs", class="fadeHover") Get in

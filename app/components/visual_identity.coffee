@@ -3,6 +3,7 @@
 class app.components.VisualIdentity extends app.AppView
   @title   : '.visual_identity h1'
   @socials : '.visual_identity  ul li a'
+  @getIn   : '.visual_identity  .getIn a'
 
   showTitle = (callback) =>
     time = 0.8
@@ -21,7 +22,17 @@ class app.components.VisualIdentity extends app.AppView
       TweenLite.to item, time, {css:{opacity:0.3, top:0, left:0, display:'block'},delay:delay,ease:Back.easeOut.config(3)}
     )
 
-    do callback if callback?
+    delay += .20
+    millisecounds = parseInt(delay * 1000)
+
+    t = setTimeout(->
+      do callback if callback?
+    , millisecounds)
+
+  showGetIn = () =>
+    time = 0.8
+
+    TweenLite.to $(@getIn), time, {css:{opacity:.3, top:0, left:0, display:'block'},ease:Back.easeOut}
 
   hideTitle = (callback) =>
     time = 0.5
@@ -48,7 +59,7 @@ class app.components.VisualIdentity extends app.AppView
 
   @show : =>
     showQueue = new app.utils.Queue [showTitle, showSocial]
-    do showQueue.start
+    showQueue.start showGetIn
 
   @hide : =>
     hideQueue = new app.utils.Queue [hideSocial, hideTitle]

@@ -150,6 +150,7 @@ body {
 }
 .visual_identity .social {
   margin: 0 auto;
+  height: 96px;
 }
 .visual_identity .social > li {
   position: relative;
@@ -174,6 +175,27 @@ body {
   opacity: 0.3;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   filter: alpha(opacity=30);
+}
+.visual_identity .getIn {
+  position: relative;
+  height: 40px;
+  margin-top: 20px;
+}
+.visual_identity .getIn a {
+  position: absolute;
+  top: -40px;
+  width: 100%;
+  font-family: 'QuicksandLight';
+  font-size: 16px;
+  color: #e6e6e6;
+  text-align: center;
+  line-height: 27px;
+  overflow: hidden;
+  clear: both;
+  opacity: 0;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  filter: alpha(opacity=0);
+  display: none;
 }
 .visual_identity {
   width: 684px;
